@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 
-namespace WelterKit_Tests.Tests.UnitTests.Diagnostics {
+namespace WelterKit.Std_Tests.Tests.UnitTests.Diagnostics {
    [TestClass]
    public class Test_ListDebugInfo {
       [TestMethod]
@@ -22,7 +22,7 @@ namespace WelterKit_Tests.Tests.UnitTests.Diagnostics {
                                                                          ( "Col1", i => i.Col1 ),
                                                                          ( "Col2", i => i.Col2 ),
                                                                          ( "Col3", i => i.Col3 )); 
-         string expected = "[cnt: 3] (List`1) System.Collections.Generic.List`1[WelterKit_Tests.UnitTests.Diagnostics.Test_DebugInfo+ClassForTables]\r\n" +
+         string expected = "[cnt: 3] (List`1) System.Collections.Generic.List`1[WelterKit.Std_Tests.Tests.UnitTests.Diagnostics.Test_DebugInfo+ClassForTables]\r\n" +
                            "000: [abc   ] [aaa.bbb.ccc] [123456789.123456789.          ]\r\n" +
                            "001: [defdef] [ddd.eee    ] [123456789.123456789.123456789.]\r\n" +
                            "002: [xyz   ] [xyz        ] [123456789.123456789.          ]";
@@ -41,7 +41,7 @@ namespace WelterKit_Tests.Tests.UnitTests.Diagnostics {
                                                                          ( "Col1", i => i.Col1 ),
                                                                          ( "Col2", i => i.Col2 ),
                                                                          ( "Col3", i => i.Col3 )); 
-         string expected = "[cnt: 0] (List`1) System.Collections.Generic.List`1[WelterKit_Tests.UnitTests.Diagnostics.Test_DebugInfo+ClassForTables]";
+         string expected = "[cnt: 0] (List`1) System.Collections.Generic.List`1[WelterKit.Std_Tests.Tests.UnitTests.Diagnostics.Test_DebugInfo+ClassForTables]";
          string actual = infoList.ToString();
          Assert.AreEqual(expected, actual);
       }

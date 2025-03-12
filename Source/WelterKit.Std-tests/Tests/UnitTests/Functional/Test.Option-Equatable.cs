@@ -4,7 +4,7 @@ using WelterKit.Std.Functional;
 
 
 
-namespace WelterKit_Tests.Tests.UnitTests.Functional {
+namespace WelterKit.Std_Tests.Tests.UnitTests.Functional {
    [TestClass]
    public class Test_Maybe_Equatable {
       [TestMethod]

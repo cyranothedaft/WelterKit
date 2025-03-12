@@ -4,7 +4,7 @@ using WelterKit.Std.Functional;
 
 
 
-namespace WelterKit_Tests.Tests.UnitTests.Functional {
+namespace WelterKit.Std_Tests.Tests.UnitTests.Functional {
    [TestClass]
    public class Test_Either_Conversion {
       private static readonly StructType OtherObject = new StructType();

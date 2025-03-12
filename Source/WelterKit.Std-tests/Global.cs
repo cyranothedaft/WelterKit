@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 
-namespace WelterKit_Tests {
+namespace WelterKit.Std_Tests {
    [TestClass]
    public class Global {
       internal const string RepositoryRoot = @"..\..\..\..\..";

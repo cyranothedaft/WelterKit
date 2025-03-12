@@ -4,7 +4,7 @@ using WelterKit.Std.AbstractDataTypes.Trees;
 using WelterKit.Std.Functional;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace WelterKit_Tests.Tests.UnitTests.AbstractDataTypes.Trees
+namespace WelterKit.Std_Tests.Tests.UnitTests.AbstractDataTypes.Trees
 {
    [TestClass]
    public class Test_Tree

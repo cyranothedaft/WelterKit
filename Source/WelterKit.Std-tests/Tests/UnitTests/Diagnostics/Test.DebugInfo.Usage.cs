@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 
-namespace WelterKit_Tests.Tests.UnitTests.Diagnostics {
+namespace WelterKit.Std_Tests.Tests.UnitTests.Diagnostics {
    [TestClass]
    public class Test_DebugInfo_Usage {
       [TestMethod]

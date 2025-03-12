@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 
-namespace WelterKit_Tests.Tests.OnFileSystem {
+namespace WelterKit.Std_Tests.Tests.OnFileSystem {
    [TestClass]
    [TestCategory("Unit with filesystem")]
    public class Test_FileSystemUtil : TesterBase {

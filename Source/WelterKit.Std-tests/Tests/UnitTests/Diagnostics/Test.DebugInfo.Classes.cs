@@ -4,7 +4,7 @@ using WelterKit.Std.Diagnostics;
 
 
 
-namespace WelterKit_Tests.Tests.UnitTests.Diagnostics {
+namespace WelterKit.Std_Tests.Tests.UnitTests.Diagnostics {
    partial class Test_DebugInfo {
       public partial class DiagTest {
          public static DebugInfoBase<InnerClass   > Info(InnerClass    obj) => InnerClass   .GetDebugInfo(obj);

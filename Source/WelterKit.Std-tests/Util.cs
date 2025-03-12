@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 
-namespace WelterKit_Tests {
+namespace WelterKit.Std_Tests {
    internal static class Util {
       internal static void AssertCollection<T>(ICollection<T> expected, ICollection<T> actual,
                                                Func<T, T, int> compareFunc, Func<T, string> toStringFunc = null,

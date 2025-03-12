@@ -5,7 +5,7 @@ using WelterKit.Std.StaticUtilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-namespace WelterKit_Tests.Tests.UnitTests {
+namespace WelterKit.Std_Tests.Tests.UnitTests {
    [TestClass]
    [TestCategory("Unit")]
    public class DelegateUtilTests {

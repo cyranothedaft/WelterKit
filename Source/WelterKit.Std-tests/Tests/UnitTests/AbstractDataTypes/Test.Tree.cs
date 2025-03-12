@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 
-namespace WelterKit_Tests.Tests.UnitTests.AbstractDataTypes {
+namespace WelterKit.Std_Tests.Tests.UnitTests.AbstractDataTypes {
    [TestClass]
    public class Test_Tree {
       [TestMethod]

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>WelterKit_Tests</RootNamespace>
+    <RootNamespace>WelterKit.Std_Tests</RootNamespace>
     <UseVSTest>true</UseVSTest>
     <IsPackable>false</IsPackable>
     <AssemblyName>WelterKit.Std_Tests</AssemblyName>

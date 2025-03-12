@@ -3,7 +3,7 @@ using WelterKit.Std.BitConverters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-namespace WelterKit_Tests.Tests.UnitTests.BitConverters {
+namespace WelterKit.Std_Tests.Tests.UnitTests.BitConverters {
    [TestClass]
    public class Test_FourByteValue {
       [TestMethod]

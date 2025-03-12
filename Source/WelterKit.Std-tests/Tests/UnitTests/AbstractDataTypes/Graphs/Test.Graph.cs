@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WelterKit.Std.AbstractDataTypes.Graphs;
 
 
-namespace WelterKit_Tests.Tests.UnitTests.AbstractDataTypes.Graphs {
+namespace WelterKit.Std_Tests.Tests.UnitTests.AbstractDataTypes.Graphs {
    [TestClass]
    public class Test_Graph {
       [TestMethod]

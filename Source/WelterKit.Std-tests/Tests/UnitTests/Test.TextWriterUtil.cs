@@ -5,7 +5,7 @@ using WelterKit.Std.StaticUtilities;
 
 
 
-namespace WelterKit_Tests.Tests.UnitTests {
+namespace WelterKit.Std_Tests.Tests.UnitTests {
    [TestClass]
    [TestCategory("Unit")]
    public class Test_TextWriterUtil {

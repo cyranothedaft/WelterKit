@@ -5,7 +5,7 @@ using WelterKit.Std;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-namespace WelterKit_Tests.Tests.UnitTests {
+namespace WelterKit.Std_Tests.Tests.UnitTests {
    [TestClass]
    public class Test_AsyncTransform {
       [TestMethod]

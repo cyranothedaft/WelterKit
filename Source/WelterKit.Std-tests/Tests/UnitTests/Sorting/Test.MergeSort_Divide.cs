@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 
-namespace WelterKit_Tests.Tests.UnitTests.Sorting {
+namespace WelterKit.Std_Tests.Tests.UnitTests.Sorting {
    [TestClass]
    public class Test {
       [TestMethod]

@@ -3,7 +3,7 @@ using WelterKit.Std.Algorithms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-namespace WelterKit_Tests.Tests.UnitTests.Algorithms {
+namespace WelterKit.Std_Tests.Tests.UnitTests.Algorithms {
    [TestClass]
    public class Test_Fnv1aHash {
       [TestMethod]

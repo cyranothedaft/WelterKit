@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 
-namespace WelterKit_Tests.Tests.UnitTests.StaticUtilities {
+namespace WelterKit.Std_Tests.Tests.UnitTests.StaticUtilities {
    [TestClass]
    [TestCategory("Unit")]
    public class Test_TypeExtensions {

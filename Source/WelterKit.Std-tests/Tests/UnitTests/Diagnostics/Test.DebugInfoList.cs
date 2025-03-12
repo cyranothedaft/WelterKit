@@ -4,7 +4,7 @@ using WelterKit.Std.Diagnostics;
 
 
 
-namespace WelterKit_Tests.Tests.UnitTests.Diagnostics {
+namespace WelterKit.Std_Tests.Tests.UnitTests.Diagnostics {
    [TestClass]
    public class Test_DebugInfoList {
       [TestMethod]

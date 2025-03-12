@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 
-namespace WelterKit_Tests.Tests.ClassTools {
+namespace WelterKit.Std_Tests.Tests.ClassTools {
    [TestClass]
    public class Test_GeneralComparatorBase {
       [TestMethod]

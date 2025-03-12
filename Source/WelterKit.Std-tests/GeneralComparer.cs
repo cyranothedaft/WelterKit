@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 
 
-namespace WelterKit_Tests {
+namespace WelterKit.Std_Tests {
    // TODO: move to WelterKit.Testing
    public class GeneralComparer<T> : IComparer<T>, IComparer {
       private readonly Func<T, T, int> _compareFunc;

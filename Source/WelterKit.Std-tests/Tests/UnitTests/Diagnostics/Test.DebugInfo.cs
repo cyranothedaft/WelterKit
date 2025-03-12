@@ -4,7 +4,7 @@ using WelterKit.Std.Diagnostics;
 
 
 
-namespace WelterKit_Tests.Tests.UnitTests.Diagnostics {
+namespace WelterKit.Std_Tests.Tests.UnitTests.Diagnostics {
    [TestClass]
    public partial class Test_DebugInfo {
       [TestMethod]
@@ -19,7 +19,7 @@ namespace WelterKit_Tests.Tests.UnitTests.Diagnostics {
       [TestMethod]
       public void ObjectInfo_1() {
          var info = new ObjectInfo<EmptyClass>(new EmptyClass());
-         string expected = "(EmptyClass) WelterKit_Tests.UnitTests.Diagnostics.Test_DebugInfo+EmptyClass";
+         string expected = "(EmptyClass) WelterKit.Std_Tests.Tests.UnitTests.Diagnostics.Test_DebugInfo+EmptyClass";
          string actual = info.ToString();
          Assert.AreEqual(expected, actual);
       }

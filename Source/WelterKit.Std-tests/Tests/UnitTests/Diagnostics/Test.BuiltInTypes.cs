@@ -5,7 +5,7 @@ using WelterKit.Std.Diagnostics;
 
 
 
-namespace WelterKit_Tests.Tests.UnitTests.Diagnostics {
+namespace WelterKit.Std_Tests.Tests.UnitTests.Diagnostics {
    [TestClass]
    public class Test_BuiltInTypes {
       [TestMethod]
@@ -84,7 +84,7 @@ OtherProp2: [null]";
                                 new Test_DebugInfo.InnerClass(),
                                 new Test_DebugInfo.InnerClass(),
                           };
-         string expected = @"[cnt: 3] (InnerClass[]) WelterKit_Tests.UnitTests.Diagnostics.Test_DebugInfo+InnerClass[]
+         string expected = @"[cnt: 3] (InnerClass[]) WelterKit.Std_Tests.Tests.UnitTests.Diagnostics.Test_DebugInfo+InnerClass[]
 000: (InnerClass)
      Prop1    : (Boolean) False
      Property2: [null]
@@ -107,7 +107,7 @@ OtherProp2: [null]";
                                 new Test_DebugInfo.OuterClass(),
                                 new Test_DebugInfo.OuterClass(),
                           };
-         string expected = @"[cnt: 3] (OuterClass[]) WelterKit_Tests.UnitTests.Diagnostics.Test_DebugInfo+OuterClass[]
+         string expected = @"[cnt: 3] (OuterClass[]) WelterKit.Std_Tests.Tests.UnitTests.Diagnostics.Test_DebugInfo+OuterClass[]
 000: (OuterClass)
      Prop1 : ""prop 1 value""
      Inner1: (InnerClass)
