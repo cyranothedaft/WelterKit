@@ -4,6 +4,15 @@
       <TargetFramework>netstandard2.1</TargetFramework>
       <RootNamespace>WelterKit.Testing</RootNamespace>
       <AssemblyName>WelterKit.Testing</AssemblyName>
+
+      <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+      <PackageId>WelterKit.Testing</PackageId>
+      <Version>$(VersionPrefix)$(VersionSuffix)</Version>
+
+      <Authors>Eric Tolman</Authors>
+      <Description>Semifluid mishmash of usefully-reusable functions and structures. Useful for Test projects.</Description>
+      <Copyright>Copyright (c) 2025 Eric Tolman</Copyright>
+      <PackageProjectUrl>https://github.com/cyranothedaft/WelterKit</PackageProjectUrl>
    </PropertyGroup>
 
    <ItemGroup>
