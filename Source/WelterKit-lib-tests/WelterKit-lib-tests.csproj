@@ -1,0 +1,16 @@
+﻿<Project Sdk="MSTest.Sdk/3.6.4">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>WelterKit_Tests</RootNamespace>
+    <UseVSTest>true</UseVSTest>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>WelterKit_Tests</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WelterKit-lib\WelterKit-lib.csproj" />
+    <ProjectReference Include="..\WelterKit.Testing-lib\WelterKit.Testing-lib.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,25 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <RootNamespace>WelterKit</RootNamespace>
-    <Nullable>enable</Nullable>
-    <AssemblyName>WelterKit</AssemblyName>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageId>WelterKit</PackageId>
+   <PropertyGroup>
+      <TargetFramework>netstandard2.1</TargetFramework>
+      <RootNamespace>WelterKit</RootNamespace>
+      <AssemblyName>WelterKit</AssemblyName>
+      <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+      <PackageId>WelterKit</PackageId>
 
-     <Version>1.2.3</Version>
-     <VersionPrefix>0.0.1</VersionPrefix>
-     <VersionSuffix>beta</VersionSuffix>
+      <Version>1.2.3</Version>
+      <VersionPrefix>0.0.1</VersionPrefix>
+      <VersionSuffix>beta</VersionSuffix>
 
-     <Authors>Eric Tolman</Authors>
-     <Description>Semifluid mismash of usefully-reusable functions and structures.</Description>
-     <Copyright>Copyright (c) 2025 Eric Tolman</Copyright>
-     <PackageProjectUrl>https://github.com/cyranothedaft/WelterKit</PackageProjectUrl>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Functional\None_T.cs~RF20b45d60.TMP" />
-  </ItemGroup>
-
+      <Authors>Eric Tolman</Authors>
+      <Description>Semifluid mishmash of usefully-reusable functions and structures.</Description>
+      <Copyright>Copyright (c) 2025 Eric Tolman</Copyright>
+      <PackageProjectUrl>https://github.com/cyranothedaft/WelterKit</PackageProjectUrl>
+   </PropertyGroup>
 </Project>
