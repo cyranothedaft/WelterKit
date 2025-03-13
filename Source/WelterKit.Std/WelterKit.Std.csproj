@@ -10,9 +10,20 @@
       <Version>$(VersionPrefix)$(VersionSuffix)</Version>
 
       <Authors>Eric Tolman</Authors>
-      <Description>Semifluid mishmash of usefully-reusable functions and structures.</Description>
+      <Description>Semifluid general-purpose mishmash of usefully-reusable functions and structures.</Description>
       <Copyright>Copyright (c) 2025 Eric Tolman</Copyright>
+      <PackageLicenseExpression>MIT</PackageLicenseExpression>
       <PackageProjectUrl>https://github.com/cyranothedaft/WelterKit</PackageProjectUrl>
       <PackageOutputPath></PackageOutputPath>
+      <Title>WelterKit General Utilities (.NET Standard)</Title>
+      <RepositoryUrl>https://github.com/cyranothedaft/WelterKit.git</RepositoryUrl>
+      <PackageReadmeFile>README.md</PackageReadmeFile>
    </PropertyGroup>
+
+   <ItemGroup>
+      <None Include="..\..\README.md">
+         <Pack>True</Pack>
+         <PackagePath>\</PackagePath>
+      </None>
+   </ItemGroup>
 </Project>
