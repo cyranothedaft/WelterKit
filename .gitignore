@@ -1,0 +1,6 @@
+.vs
+/Source/*/obj/
+/Source/*/bin/
+/Source/TestResults
+
+*.user
