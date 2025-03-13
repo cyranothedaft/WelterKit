@@ -10,17 +10,23 @@
 
   Targets _.NET Standard 2.1_.
 
+  https://www.nuget.org/packages/WelterKit.Std
+
 - ### WelkerKit
 
   Updates and additions that require newer features of .NET.
 
   _Targets .NET 6.0_.
 
+  https://www.nuget.org/packages/WelterKit
+
 - ### WelkerKit.Testing
 
   Utilities to aid with automated testing / unit tests.
 
   _Targets .NET Standard 2.1_.
+
+  https://www.nuget.org/packages/WelterKit.Testing/
 
 > These libraries are available for--but not necessarily intended for--public consumption. Use at your own risk
 
