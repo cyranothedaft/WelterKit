@@ -1,3 +1,6 @@
 .vs
-Source/WelterKit-lib/obj/
-Source/WelterKit-lib/bin/
+/Source/*/obj/
+/Source/*/bin/
+/Source/TestResults
+
+*.user
