@@ -10,10 +10,21 @@
       <Version>$(VersionPrefix)$(VersionSuffix)</Version>
 
       <Authors>Eric Tolman</Authors>
-      <Description>Semifluid mishmash of usefully-reusable functions and structures. Useful for Test projects.</Description>
+      <Description>Usefully-reusable functions and structures for unit testing.</Description>
       <Copyright>Copyright (c) 2025 Eric Tolman</Copyright>
+      <PackageLicenseExpression>MIT</PackageLicenseExpression>
       <PackageProjectUrl>https://github.com/cyranothedaft/WelterKit</PackageProjectUrl>
+      <Title>WelterKit Testing Utilities</Title>
+      <RepositoryUrl>https://github.com/cyranothedaft/WelterKit.git</RepositoryUrl>
+      <PackageReadmeFile>README.md</PackageReadmeFile>
    </PropertyGroup>
+
+   <ItemGroup>
+     <None Include="..\..\README.md">
+       <Pack>True</Pack>
+       <PackagePath>\</PackagePath>
+     </None>
+   </ItemGroup>
 
    <ItemGroup>
      <PackageReference Include="MSTest.TestFramework" />
