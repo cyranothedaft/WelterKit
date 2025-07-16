@@ -65,7 +65,7 @@ internal class SubscriberList<TMsg> : ISubscriberListReader<TMsg> {
 
    public SubscriberList<TMsg> TryAdd<TSubMsg>(HandleSpecificMessageDelegate<TSubMsg> handleSpecificMessage, out bool success) {
       var result = tryAddActual(handleSpecificMessage, out success);
-      _logger?.LogTrace("TryAdd handler for submsg type <{type}> - returning {result}, success: {success}", typeof( TSubMsg ), result, success);
+      _logger?.LogDebug("TryAdd handler for submsg type <{type}> - returning {result}, success: {success}", typeof( TSubMsg ), result, success);
       return result;
    }
 
