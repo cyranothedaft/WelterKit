@@ -108,14 +108,14 @@ namespace WelterKit.Std.StaticUtilities {
 
 
       // TODO: test
-      public static IEnumerable<TResult> SelectOptional<T, TResult>(this IEnumerable<T> sequence, Func<T, Maybe<TResult>> map)
+      public static IEnumerable<TResult> SelectMaybe<T, TResult>(this IEnumerable<T> sequence, Func<T, Maybe<TResult>> map)
          => sequence.Select(map)
                     .OfType<Some<TResult>>()
                     .Select(some => ( TResult )some);
 
 
       // TODO: test
-      public static IEnumerable<T> SelectOptional<T>(this IEnumerable<Maybe<T>> sequence)
+      public static IEnumerable<T> SelectMaybe<T>(this IEnumerable<Maybe<T>> sequence)
          => sequence.OfType<Some<T>>()
                     .Select(some => ( T )some);
 
