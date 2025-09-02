@@ -26,6 +26,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelterKit-tests", "WelterKi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelterKit.Telemetry", "WelterKit.Telemetry\WelterKit.Telemetry.csproj", "{3AE35E3F-1C4E-4645-8CBD-1C09EC502936}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleApps", "SampleApps", "{84A0ACA2-4C95-46F5-A8AA-771521905B01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingSample", "SampleApps\LoggingSample\LoggingSample.csproj", "{60342E41-CAF9-70E2-1718-1B047CA7A411}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +60,10 @@ Global
 		{3AE35E3F-1C4E-4645-8CBD-1C09EC502936}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AE35E3F-1C4E-4645-8CBD-1C09EC502936}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AE35E3F-1C4E-4645-8CBD-1C09EC502936}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60342E41-CAF9-70E2-1718-1B047CA7A411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60342E41-CAF9-70E2-1718-1B047CA7A411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60342E41-CAF9-70E2-1718-1B047CA7A411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60342E41-CAF9-70E2-1718-1B047CA7A411}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +75,7 @@ Global
 		{BD581660-F8C9-4A82-B5A7-11A2351B87A0} = {7076B16F-ABC0-487D-A0AA-962A68D62B75}
 		{31507A88-0AA3-4C15-AC59-4E8E638639C5} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{3AE35E3F-1C4E-4645-8CBD-1C09EC502936} = {7076B16F-ABC0-487D-A0AA-962A68D62B75}
+		{60342E41-CAF9-70E2-1718-1B047CA7A411} = {84A0ACA2-4C95-46F5-A8AA-771521905B01}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5944CD6C-D03A-4480-96E8-099FE896A0BF}
