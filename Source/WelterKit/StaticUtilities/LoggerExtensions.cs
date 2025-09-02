@@ -24,6 +24,6 @@ public static class LoggerExtensions {
          => _inner.Log(logLevel, eventId, state, exception, (s, e) => _formatter(formatter(s, e)));
 
       public bool IsEnabled(LogLevel logLevel) => _inner.IsEnabled(logLevel);
-      public IDisposable BeginScope<TState>(TState state) => _inner.BeginScope(state);
+      public IDisposable BeginScope<TState>(TState? state) => _inner.BeginScope(state);
    }
 }

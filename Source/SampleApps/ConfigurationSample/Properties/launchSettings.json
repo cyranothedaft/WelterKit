@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "ConfigurationSample": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "TEST_KEY1": "env-value-1",
+        "TEST_KEY2": "env-value-2"
+      }
+    }
+  }
+}
