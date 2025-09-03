@@ -1,24 +1,25 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 
-namespace WelterKit.Telemetry.Logging.File;
+namespace WelterKit.Telemetry.Logging.MinimalFile;
 
-public class FileLoggerProvider : ILoggerProvider, ISupportExternalScope {
+public class MinimalFileLoggerProvider : ILoggerProvider, ISupportExternalScope {
    public const bool Default_ForceSingleLine = false;
    
    private StreamWriter? _streamWriter = null;
    private IExternalScopeProvider? _scopeProvider = null;
 
 
-   internal FileLoggerOptions? Settings { get; private set; }
+   internal MinimalFileLoggerOptions? Settings { get; private set; }
 
 
    // protected IDisposable SettingsChangeToken;
 
 
-   public FileLoggerProvider(IOptionsMonitor<FileLoggerOptions> Settings)
+   public MinimalFileLoggerProvider(IOptionsMonitor<MinimalFileLoggerOptions> Settings)
          : this(Settings.CurrentValue) {
       // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/change-tokens
       // TODO?
@@ -26,7 +27,7 @@ public class FileLoggerProvider : ILoggerProvider, ISupportExternalScope {
    }
 
 
-   public FileLoggerProvider(FileLoggerOptions settings) {
+   public MinimalFileLoggerProvider(MinimalFileLoggerOptions settings) {
       Settings = settings;
    }
 
@@ -44,7 +45,7 @@ public class FileLoggerProvider : ILoggerProvider, ISupportExternalScope {
       // create new file stream that will be disposed by Dispose()
       _streamWriter ??= System.IO.File.AppendText(Settings?.LogFilePath
                                                ?? throw new Exception("Cannot create log file stream - Settings?.LogFilePath is null"));
-      FileLogger logger = new(categoryName, ScopeProvider, isEnabled, _streamWriter,
+      MinimalFileLogger logger = new(categoryName, ScopeProvider, isEnabled, _streamWriter,
                               Settings?.ForceSingleLine ?? Default_ForceSingleLine);
       logger.LogInformation("Logger created");
       return logger;

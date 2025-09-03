@@ -1,9 +1,9 @@
 ﻿using System;
 
 
-namespace WelterKit.Telemetry.Logging.File;
+namespace WelterKit.Telemetry.Logging.MinimalFile;
 
-public class FileLoggerOptions {
+public class MinimalFileLoggerOptions {
    public string? LogFilePath { get; set; } = null;
    public bool ForceSingleLine { get; set; } = false;
 }

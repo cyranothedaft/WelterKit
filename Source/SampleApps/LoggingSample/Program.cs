@@ -17,7 +17,7 @@ internal static class Program {
                                                                                        options.ColorBehavior   = LoggerColorBehavior.Enabled;
                                                                                     })
 
-                                                                  .AddFile((FileLoggerOptions options) => {
+                                                                  .AddFile((MinimalFileLoggerOptions options) => {
                                                                               options.LogFilePath     = @".\sample.log";
                                                                               options.ForceSingleLine = true;
                                                                            })
