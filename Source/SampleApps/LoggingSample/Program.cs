@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
-using WelterKit.Telemetry.Logging.File;
+using WelterKit.Telemetry.Logging.MinimalFile;
 
 
 namespace LoggingSample;
