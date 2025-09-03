@@ -1,21 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
    <PropertyGroup>
-      <TargetFramework>netstandard2.1</TargetFramework>
-      <RootNamespace>WelterKit.Std</RootNamespace>
-      <AssemblyName>WelterKit.Std</AssemblyName>
+      <TargetFramework>net8.0</TargetFramework>
+      <RootNamespace>WelterKit.Telemetry</RootNamespace>
+      <AssemblyName>WelterKit.Telemetry</AssemblyName>
 
       <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-      <PackageId>WelterKit.Std</PackageId>
+      <PackageId>WelterKit.Telemetry</PackageId>
       <Version>$(VersionPrefix)$(VersionSuffix)</Version>
 
       <Authors>Eric Tolman</Authors>
-      <Description>Semifluid general-purpose mishmash of usefully-reusable functions and structures.</Description>
+      <Description>General-purpose functions and structures for logging and other telemetry.</Description>
       <Copyright>Copyright (c) 2025 Eric Tolman</Copyright>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
       <PackageProjectUrl>https://github.com/cyranothedaft/WelterKit</PackageProjectUrl>
-      <PackageOutputPath></PackageOutputPath>
-      <Title>WelterKit General Utilities (.NET Standard)</Title>
+      <Title>WelterKit Logging and Telemetry Utilities</Title>
       <RepositoryUrl>https://github.com/cyranothedaft/WelterKit.git</RepositoryUrl>
       <PackageReadmeFile>README.md</PackageReadmeFile>
    </PropertyGroup>
@@ -26,4 +25,10 @@
          <PackagePath>\</PackagePath>
       </None>
    </ItemGroup>
+
+   <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Configuration" />
+   </ItemGroup>
+
 </Project>
