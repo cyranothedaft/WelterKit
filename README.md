@@ -20,6 +20,14 @@
 
   https://www.nuget.org/packages/WelterKit
 
+- ### WelkerKit.Telemetry
+
+  Utilities specific to logging and telemetry.
+
+  _Targets .NET 8.0_.
+
+  https://www.nuget.org/packages/WelterKit.Telemetry
+
 - ### WelkerKit.Testing
 
   Utilities to aid with automated testing / unit tests.

@@ -10,7 +10,7 @@
       <Version>$(VersionPrefix)$(VersionSuffix)</Version>
 
       <Authors>Eric Tolman</Authors>
-      <Description>Semifluid general-purpose mishmash of usefully-reusable functions and structures.</Description>
+      <Description>General-purpose functions and structures for logging and other telemetry.</Description>
       <Copyright>Copyright (c) 2025 Eric Tolman</Copyright>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
       <PackageProjectUrl>https://github.com/cyranothedaft/WelterKit</PackageProjectUrl>
