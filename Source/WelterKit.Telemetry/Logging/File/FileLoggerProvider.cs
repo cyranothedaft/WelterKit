@@ -46,7 +46,8 @@ public class FileLoggerProvider : ILoggerProvider, ISupportExternalScope {
       // create new file stream that will be disposed by Dispose()
       _streamWriter ??= System.IO.File.AppendText(Settings?.LogFilePath
                                                ?? throw new Exception("Cannot create log file stream - Settings?.LogFilePath is null"));
-      FileLogger logger = new(categoryName, ScopeProvider, isEnabled, _streamWriter, Settings?.ForceSingleLine ?? Default_ForceSingleLine);
+      FileLogger logger = new(categoryName, ScopeProvider, isEnabled, _streamWriter,
+                              Settings?.ForceSingleLine ?? Default_ForceSingleLine);
       logger.LogInformation("Logger created");
       return logger;
    }
