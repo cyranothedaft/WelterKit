@@ -29,6 +29,4 @@ public static class FileLoggerExtensions {
 
       return builder;
    }
-
-
 }

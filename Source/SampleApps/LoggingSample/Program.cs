@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging.Console;
 using WelterKit.Telemetry.Logging.File;
 
 
-
 namespace LoggingSample;
 
 internal static class Program {

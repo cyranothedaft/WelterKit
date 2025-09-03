@@ -26,15 +26,6 @@ public class TextWriterLogger : ILogger {
          "crit", // Critical
          "none", // None
       ];
-      //[
-      //   "tra", // Trace
-      //   "dbg", // Debug
-      //   "inf", // Information
-      //   "wrn", // Warning
-      //   "err", // Error
-      //   "crt", // Critical
-      //   "non", // None
-      //];
 
 
    public TextWriterLogger(string categoryName, IExternalScopeProvider scopeProvider, Func<LogLevel, bool> isEnabledFunc, System.IO.TextWriter writer, bool forceSingleLine) {
