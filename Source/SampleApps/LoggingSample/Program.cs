@@ -60,6 +60,15 @@ internal static class Program {
          auxLogger.LogWarning    ("Main-aux - Warning    ");
          auxLogger.LogError      ("Main-aux - Error      ");
          auxLogger.LogCritical   ("Main-aux - Critical   ");
+
+         try {
+            int x = 0;
+            // ReSharper disable once IntDivisionByZero
+            int y = 1 / x;
+         }
+         catch (Exception exception) {
+            programLogger.LogError(exception, "caught exception: ");
+         }
       }
    }
 }

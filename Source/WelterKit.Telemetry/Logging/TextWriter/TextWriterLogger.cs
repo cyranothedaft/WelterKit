@@ -8,7 +8,7 @@ namespace WelterKit.Telemetry.Logging.TextWriter;
 
 public class TextWriterLogger : ILogger {
 
-   internal delegate void LogActionDelegate(LogLevel logLevel, EventId eventId, string message);
+   internal delegate void LogActionDelegate(LogLevel logLevel, EventId eventId, string message, Exception? exception);
 
    private readonly string _categoryName;
    private readonly IExternalScopeProvider _scopeProvider;
@@ -37,7 +37,7 @@ public class TextWriterLogger : ILogger {
                                                        ? replaceNewlines
                                                        : msg => msg;
 
-      _logAction = (logLevel, eventId, message) => writeLine(scopeProvider, writer, replaceNewlinesFunc, logLevel, categoryName, eventId, message);
+      _logAction = (logLevel, eventId, message, exception) => writeLine(scopeProvider, writer, replaceNewlinesFunc, logLevel, categoryName, eventId, message, exception);
    }
 
 
@@ -47,7 +47,7 @@ public class TextWriterLogger : ILogger {
 
    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter) {
       if (IsEnabled(logLevel))
-         _logAction(logLevel, eventId, formatter(state, exception));
+         _logAction(logLevel, eventId, formatter(state, exception /* n.b.: this formatter actually ignores the exception parameter */), exception);
    }
 
 
@@ -61,14 +61,18 @@ public class TextWriterLogger : ILogger {
 
 
    private static void writeLine(IExternalScopeProvider scopeProvider, System.IO.TextWriter writer, Func<string, string> replaceNewlinesFunc,
-                                 LogLevel logLevel, string category, EventId eventId, string msg) {
+                                 LogLevel logLevel, string category, EventId eventId, string msg, Exception? exception) {
       writer.WriteLine(formatThis(logLevel,
                                   category,
                                   eventId,
-                                  formatScope(scopeProvider) + replaceNewlinesFunc(msg)
+                                  replaceNewlinesFunc(formatMessage(scopeProvider, msg, exception))
                                   ));
       writer.Flush();
    }
+
+
+   private static string formatMessage(IExternalScopeProvider scopeProvider, string msg, Exception? exception)
+      => string.Concat(formatScope(scopeProvider), msg, ' ', exception?.ToString());
 
 
    // TODO: allow overriding this with setting/option
