@@ -9,5 +9,6 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.8" />
     <PackageVersion Include="MSTest.TestFramework" Version="3.6.4" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="System.CommandLine" Version="2.0.0-beta7.25380.108" />
   </ItemGroup>
 </Project>
