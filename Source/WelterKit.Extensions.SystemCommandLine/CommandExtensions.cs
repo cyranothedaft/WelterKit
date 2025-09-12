@@ -1,8 +1,6 @@
 ﻿using System;
 using System.CommandLine;
-using System.Threading;
 using System.Threading.Tasks;
-using WelterKit.Extensions.SystemCommandLine;
 
 
 namespace WelterKit.Extensions.SystemCommandLine;
@@ -18,7 +16,7 @@ public static class CommandExtensions {
    }
 
 
-   public static TCommand WithAction<TCommand>(this TCommand command, Action<ParseResult> action) where TCommand : Command {
+   public static TCommand WithAction<TCommand>(this TCommand command, Func<ParseResult, int> action) where TCommand : Command {
       command.SetAction(action);
       return command;
    }
@@ -30,23 +28,21 @@ public static class CommandExtensions {
    }
 
 
-   public static TCommand WithGlobalOption<TCommand, TOption>(this TCommand command,
-                                                              TOption globalOption,
-                                                              out TOption passBack)
-         where TCommand : Command
-         where TOption : Option {
-      passBack = globalOption;
-      return command.DoAndReturn(c => { c.AddGlobalOption(globalOption); });
+   public static TCmd WithArgument<TCmd, TArg>(this TCmd command, TArg argument, out TArg passBack)
+         where TCmd : Command
+         where TArg : Argument {
+      passBack = argument;
+      command.Add(argument);
+      return command;
    }
 
 
-   public static TCommand WithOption<TCommand, TOption>(this TCommand command,
-                                                        TOption Option,
-                                                        out TOption passBack)
-         where TCommand : Command
-         where TOption : Option {
-      passBack = Option;
-      return command.DoAndReturn(c => { c.AddOption(Option); });
+   public static TCmd WithOption<TCmd, TOpt>(this TCmd command, TOpt option, out TOpt passBack)
+         where TCmd : Command
+         where TOpt : Option {
+      passBack = option;
+      command.Add(option);
+      return command;
    }
 
 }

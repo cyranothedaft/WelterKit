@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CommandLineSample": {
+      "commandName": "Project",
+      "commandLineArgs": "summarize C:\\eat"
+    }
+  }
+}
