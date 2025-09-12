@@ -20,6 +20,14 @@
 
   https://www.nuget.org/packages/WelterKit
 
+- ### WelterKit.Extensions.SystemCommandLine
+
+  Extensions for System.CommandLine methods to facilitate a functional approach via method chaining.
+
+  _Targets .NET 8.0_.
+
+  https://www.nuget.org/packages/WelterKit.Extensions.SystemCommandLine
+
 - ### WelkerKit.Telemetry
 
   Utilities specific to logging and telemetry.
