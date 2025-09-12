@@ -47,7 +47,7 @@ public class MinimalFileLoggerProvider : ILoggerProvider, ISupportExternalScope 
                                                ?? throw new Exception("Cannot create log file stream - Settings?.LogFilePath is null"));
       MinimalFileLogger logger = new(categoryName, ScopeProvider, isEnabled, _streamWriter,
                               Settings?.ForceSingleLine ?? Default_ForceSingleLine);
-      logger.LogInformation("Logger created");
+      // logger.LogInformation("Logger created");
       return logger;
    }
 
