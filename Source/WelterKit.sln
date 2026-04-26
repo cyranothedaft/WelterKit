@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.35821.62
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11626.88 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelterKit.Std", "WelterKit.Std\WelterKit.Std.csproj", "{7A750FF0-2EA1-4824-BC1B-7BCCC50ABF7A}"
 EndProject
@@ -33,6 +33,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelterKit.Extensions.SystemCommandLine", "WelterKit.Extensions.SystemCommandLine\WelterKit.Extensions.SystemCommandLine.csproj", "{8A69D9B0-B0EC-40A5-939E-A1FA88107501}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandLineSample", "SampleApps\CommandLineSample\CommandLineSample.csproj", "{7673B948-910E-4A89-81B1-01D93B0FC476}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelterKit.FunctionalContainers", "WelterKit.FunctionalContainers\WelterKit.FunctionalContainers.csproj", "{20B73C85-A9C2-4AF8-BEEE-E15247278B2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelterKit.FunctionalContainers-tests", "WelterKit.FunctionalContainers-tests\WelterKit.FunctionalContainers-tests.csproj", "{430CE045-2520-4E47-BECE-A853D8E5B84B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +80,14 @@ Global
 		{7673B948-910E-4A89-81B1-01D93B0FC476}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7673B948-910E-4A89-81B1-01D93B0FC476}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7673B948-910E-4A89-81B1-01D93B0FC476}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20B73C85-A9C2-4AF8-BEEE-E15247278B2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20B73C85-A9C2-4AF8-BEEE-E15247278B2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20B73C85-A9C2-4AF8-BEEE-E15247278B2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20B73C85-A9C2-4AF8-BEEE-E15247278B2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{430CE045-2520-4E47-BECE-A853D8E5B84B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{430CE045-2520-4E47-BECE-A853D8E5B84B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{430CE045-2520-4E47-BECE-A853D8E5B84B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{430CE045-2520-4E47-BECE-A853D8E5B84B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +102,8 @@ Global
 		{60342E41-CAF9-70E2-1718-1B047CA7A411} = {84A0ACA2-4C95-46F5-A8AA-771521905B01}
 		{8A69D9B0-B0EC-40A5-939E-A1FA88107501} = {7076B16F-ABC0-487D-A0AA-962A68D62B75}
 		{7673B948-910E-4A89-81B1-01D93B0FC476} = {84A0ACA2-4C95-46F5-A8AA-771521905B01}
+		{20B73C85-A9C2-4AF8-BEEE-E15247278B2B} = {7076B16F-ABC0-487D-A0AA-962A68D62B75}
+		{430CE045-2520-4E47-BECE-A853D8E5B84B} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5944CD6C-D03A-4480-96E8-099FE896A0BF}
