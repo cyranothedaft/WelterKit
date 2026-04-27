@@ -25,28 +25,46 @@ public class Laws_Applicative {
 
    [TestMethod]
    public void Composition() {
-      var funcs1 = ( u: (Func<string, string>)( static x => x + "$"   ),
-                     v: (Func<int, string>   )( static x => x.ToString() ) );
+      var funcs1 = ( u: new KList<Func<string, string>>( [ static x => x + "$"      ] ),
+                     v: new KList<Func<int, string>   >( [ static x => x.ToString() ] ) );
 
-      var funcs2 = ( u: (Func<int, string>)( static x => x + "int" ),
-                     v: (Func<float, int> )( static x => (int)x  ) );
+      var funcs2 = ( u: new KList<Func<int, string>>( [ static x => x + "int" ] ),
+                     v: new KList<Func<float, int> >( [ static x => (int)x    ] ) );
 
-      var funcs3 = ( u: (Func<int, TimeSpan>)( static x => TimeSpan.FromMinutes(x) ),
-                     v: (Func<string, int>  )( static x => x.Length  ) );
+      var funcs3 = ( u: new KList<Func<int, TimeSpan>>( [ static x => TimeSpan.FromMinutes(x) ] ),
+                     v: new KList<Func<string, int>  >( [ static x => x.Length                ] ) );
 
-      var funcs4 = ( u: (Func<(bool isNull, string s), int>    )( static x => x.isNull ? -1 : x.s.Length                     ),
-                     v: (Func<string?, (bool isNull, string s)>)( static x => x is null ? (true, string.Empty) : (false, x!) ) );
+      var funcs4 = ( u: new KList<Func<(bool isNull, string s), int>    >( [ static x => x.isNull ? -1 : x.s.Length                     ] ),
+                     v: new KList<Func<string?, (bool isNull, string s)>>( [ static x => x is null ? (true, string.Empty) : (false, x!) ] ) );
 
-      testComposition(funcs1, new KList<int>([]));
-      testComposition(funcs1, new KList<int>([1, 42, 999]));
-      testComposition(funcs2, new KList<float>([]));
-      testComposition(funcs2, new KList<float>([0.1f, 42.42f, 999.999f]));
-      testComposition(funcs3, new KList<string>([]));
-      testComposition(funcs3, new KList<string>([string.Empty, string.Empty]));
-      testComposition(funcs3, new KList<string>(["abc", "123", "XYZ"]));
-      testComposition(funcs4, new KList<string?>([]));
-      testComposition(funcs4, new KList<string?>([null]));
-      testComposition(funcs4, new KList<string?>(["", null, "abc XYZ"]));
+
+      var testValues1 = new[]
+                           {
+                              new KList<int>([]),
+                              new KList<int>([1, 42, 999]),
+                           };
+      var testValues2 = new[]
+                           {
+                              new KList<float>([]),
+                              new KList<float>([0.1f, 42.42f, 999.999f]),
+                           };
+      var testValues3 = new[]
+                           {
+                              new KList<string>([]),
+                              new KList<string>([string.Empty, string.Empty]),
+                              new KList<string>(["abc", "123", "XYZ"]),
+                           };
+      var testValues4 = new[]
+                           {
+                              new KList<string?>([]),
+                              new KList<string?>([null]),
+                              new KList<string?>([null, null, "abc XYZ"]),
+                           };
+
+      LawsTestHelpers.Multitest(funcs1, testValues1, testComposition);
+      LawsTestHelpers.Multitest(funcs2, testValues2, testComposition);
+      LawsTestHelpers.Multitest(funcs3, testValues3, testComposition);
+      LawsTestHelpers.Multitest(funcs4, testValues4, testComposition);
    }
 
 
@@ -56,13 +74,10 @@ public class Laws_Applicative {
    }
 
 
-   private static void testComposition<A, B, C>(( Func<B, C> u,
-                                                  Func<A, B> v ) funcs,
+   private static void testComposition<A, B, C>(K<KList, Func<B, C>> u,
+                                                K<KList, Func<A, B>> v,
                                                 K<KList, A> testList) {
-      Laws.Applicative.Composition(KList.Pure(funcs.u),
-                                   KList.Pure(funcs.v),
-                                   testList,
-                                   collectionAssert_areEqual);
+      Laws.Applicative.Composition(u, v, testList, collectionAssert_areEqual);
    }
 
 

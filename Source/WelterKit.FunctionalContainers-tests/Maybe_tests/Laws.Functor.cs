@@ -53,8 +53,6 @@ public class Laws_Functor {
    }
 
 
-
-
    private static void testIdentity<A>(Maybe<A> testValue) {
       Laws.Functor.Identity(testValue, Assert.AreEqual);
    }
