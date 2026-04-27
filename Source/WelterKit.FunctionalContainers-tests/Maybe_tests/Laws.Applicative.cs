@@ -71,6 +71,44 @@ public class Laws_Applicative {
    }
 
 
+   [TestMethod]
+   public void Homomorphism() {
+      var func1 = (Func<int, string>                     )( static x => x.ToString()                                   );
+      var func2 = (Func<float, int>                      )( static x => (int)x                                         );
+      var func3 = (Func<string, int>                     )( static x => x.Length                                       );
+      var func4 = (Func<string?, (bool isNull, string s)>)( static x => x is null ? (true, string.Empty) : (false, x!) );
+
+      var testValues1 = new int[] { 1, 42, 999 };
+      var testValues2 = new float[] { 0.1f, 42.42f, 999.999f };
+      var testValues3 = new string[] { string.Empty, "X", "42", "abc XYZ" };
+      var testValues4 = new string?[] { string.Empty, "X", "42", "abc XYZ", null };
+
+      multitestHomomorphism(func1, testValues1);
+      multitestHomomorphism(func2, testValues2);
+      multitestHomomorphism(func3, testValues3);
+      multitestHomomorphism(func4, testValues4);
+   }
+
+
+   [TestMethod]
+   public void Interchange() {
+      static string         func1(int x)     => x.ToString()                                  ;
+      static int            func2(float x)   => (int)x                                        ;
+      static int            func3(string x)  => x.Length                                      ;
+      static (bool, string) func4(string? x) => x is null ? (true, string.Empty) : (false, x!);
+
+      var testValues1 = new int[] { 1, 42, 999 };
+      var testValues2 = new float[] { 0.1f, 42.42f, 999.999f };
+      var testValues3 = new string[] { string.Empty, "X", "42", "abc XYZ" };
+      var testValues4 = new string?[] { string.Empty, "X", "42", "abc XYZ", null };
+
+      multitestInterchange(func1, testValues1);
+      multitestInterchange(func2, testValues2);
+      multitestInterchange(func3, testValues3);
+      multitestInterchange(func4, testValues4);
+   }
+
+
    private static void testIdentity<A>(Maybe<A> testValue) {
       Laws.Applicative.Identity(testValue, Assert.AreEqual);
    }
@@ -89,4 +127,22 @@ public class Laws_Applicative {
                                                  Assert.AreEqual);
    }
 
+
+   private static void testInterchange<A, B>(Maybe<Func<A, B>> u, A y) {
+      Laws.Applicative.Interchange(u, y, Assert.AreEqual);
+   }
+
+
+   private static void multitestHomomorphism<A, B>(Func<A, B> func, A[] values) {
+      foreach (A value in values)
+         testHomomorphism(func, value);
+   }
+
+
+   private static void multitestInterchange<A, B>(Func<A, B> func, A[] values) {
+      foreach (A value in values) {
+         testInterchange(new Some<Func<A, B>>(func), value);
+         testInterchange(new None<Func<A, B>>()    , value);
+      }
+   }
 }
