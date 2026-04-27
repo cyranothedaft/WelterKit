@@ -16,7 +16,7 @@ internal static partial class Laws {
 // Interchange: u <*> pure y = pure ($ y) <*> u
 
 
-      // Identity: pure id <*> v = v
+      // Identity:  pure id <*> v  =  v
       public static void Identity<F, A>(K<F, A> testSample,
                                         Action<K<F, A>, K<F, A>> assertAreEqual)
             where F : IApplicative<F> {
@@ -25,15 +25,24 @@ internal static partial class Laws {
       }
 
 
-      // Composition: pure (.) <*> u <*> v <*> w = u <*> (v <*> w)
-      public static void Composition<F, A, B,C>(K<F, A> testSample, Func<B, C> gSample, Func<A, B> hSample,
-                                                Action<K<F, C>, K<F, C>> assertAreEqual)
+      // Composition:  pure (.) <*> u <*> v <*> w  =  u <*> (v <*> w)
+      public static void Composition<F, A, B, C>(// K<F, A> testSample, 
+                                                 // Func<B, C> gSample, Func<A, B> hSample,
+                                                 K<F, Func<B, C>> u,
+                                                 K<F, Func<A, B>> v,
+                                                 K<F, A> w,
+                                                 Action<K<F, C>, K<F, C>> assertAreEqual)
             where F : IApplicative<F> {
+         var composeCurried = Fn.Curry<Func<B, C>, Func<A, B>, Func<A, C>>(Fn.Compose);
+         var a = F.Pure(composeCurried);
 
-         K<F, Func<Func<B, C>, Func<Func<A, B>, Func<A, C>>>> a = F.Pure(Fn.Curry<Func<B, C>, Func<A, B>, Func<A, C>>(Fn.Compose));
-         K<F, A> u;
-         var b = F.Apply<A, Func<Func<A, B>, Func<A, C>>>(u,a);
+         K<F, C> x = a.Apply(u)
+                      .Apply(v)
+                      .Apply(w);
 
+         K<F, C> y = u.Apply(v.Apply(w));
+
+         assertAreEqual(x, y);
       }
 
 

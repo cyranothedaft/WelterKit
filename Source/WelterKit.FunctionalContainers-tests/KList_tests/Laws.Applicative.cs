@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq;
 using WelterKit.FunctionalContainers;
 using WelterKit.FunctionalContainers.Framework;
-using WelterKit.FunctionalContainers.Framework.Kinds;
 
 
 
@@ -28,18 +26,18 @@ public class Laws_Applicative {
 
    [TestMethod]
    public void Composition_Simple() {
-      Laws.Applicative.Composition(new KList<int>([1, 42, 999]),
-                                   static (string x) => x + "$",
-                                   static (int x) => x.ToString(),
+      Laws.Applicative.Composition(KList.Pure(static (string x) => x + "$"),
+                                   KList.Pure(static (int x) => x.ToString()),
+                                   new KList<int>([1, 42, 999]),
                                    collectionAssert_areEqual);
    }
 
 
    [TestMethod]
    public void Composition_Simple_Empty() {
-      Laws.Applicative.Composition(new KList<int>([]),
-                                   static (string x) => x + "$",
-                                   static (int x) => x.ToString(),
+      Laws.Applicative.Composition(KList.Pure(static (string x) => x + "$"),
+                                   KList.Pure(static (int x) => x.ToString()),
+                                   new KList<int>([]),
                                    collectionAssert_areEqual);
    }
 

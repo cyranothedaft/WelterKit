@@ -14,12 +14,26 @@ public class Laws_Applicative {
    }
 
 
-   // Functors must preserve composition
    [TestMethod]
-   public void Composition_Simple() {
-      Laws.Applicative.Composition(new Some<int>(42),
-                                   static (string x) => x + "$",
-                                   static (int x) => x.ToString(),
+   public void Identity_Simple_None() {
+      Laws.Applicative.Identity(new None<int>(), Assert.AreEqual);
+   }
+
+
+   [TestMethod]
+   public void Composition_Simple_Some() {
+      Laws.Applicative.Composition(Maybe.Pure<Func<string, string>>(static (string x) => x + "$"),
+                                   Maybe.Pure<Func<int,    string>>(static (int x) => x.ToString()),
+                                   new Some<int>(42),
+                                   Assert.AreEqual);
+   }
+
+
+   [TestMethod]
+   public void Composition_Simple_None() {
+      Laws.Applicative.Composition(Maybe.Pure<Func<string, string>>(static (string x) => x + "$"),
+                                   Maybe.Pure<Func<int,    string>>(static (int x) => x.ToString()),
+                                   new None<int>(),
                                    Assert.AreEqual);
    }
 

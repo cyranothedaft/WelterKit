@@ -7,7 +7,7 @@ using WelterKit.FunctionalContainers.Framework.Kinds;
 namespace WelterKit.FunctionalContainers;
 
 public abstract partial record Maybe<A> : K<Maybe, A>;
-public          partial record Some <A>(A Value) : Maybe<A>; // where A : IEquatable<A>;
+public          partial record Some <A>(A Value) : Maybe<A>;
 public          partial record None <A>          : Maybe<A>;
 
 
@@ -48,9 +48,7 @@ public static class MaybeExtensions {
    public static Maybe<A> As<A>(this K<Maybe, A> ma) => (Maybe<A>)ma;
 
 
-   public static K<Maybe, B> FMap<A, B>(this K<Maybe, A> a, Func<A, B> func)
-         where A : IEquatable<A>
-         where B : IEquatable<B>
-      => Maybe.FMap(a, func);
+   // public static K<Maybe, B> FMap<A, B>(this K<Maybe, A> a, Func<A, B> func)
+   //    => Maybe.FMap(a, func);
 
 }
