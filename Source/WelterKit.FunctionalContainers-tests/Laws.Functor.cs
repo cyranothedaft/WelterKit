@@ -18,18 +18,16 @@ internal static partial class Laws {
 
 
       // fmap (g . h) = (fmap g) . (fmap h)
-      public static void Composition<F, A, B,C>(K<F, A> testSample, Func<B, C> gSample, Func<A, B> hSample,
-                                                Action<K<F, C>, K<F, C>> assertAreEqual)
+      public static void Composition<F, A, B, C>(K<F, A> testSample, Func<B, C> g, Func<A, B> h,
+                                                 Action<K<F, C>, K<F, C>> assertAreEqual)
             where F : IFunctor<F> {
-         Func<K<F, A>, K<F, C>> func1 = (K<F, A> i) => F.FMap(i, Fn.Compose(gSample, hSample));
-         Func<K<F, A>, K<F, C>> func2 = Fn.Compose((K<F, B> i) => F.FMap(i, gSample),
-                                                   (K<F, A> j) => F.FMap(j, hSample));
 
-         assertAreEqual(func1(testSample),
-                        func2(testSample));
+         Func<K<F, A>, K<F, C>> lhs = (K<F, A> i) => F.FMap(i, Fn.Compose(g, h));
+         Func<K<F, A>, K<F, C>> rhs = Fn.Compose((K<F, B> i) => F.FMap(i, g),
+                                                 (K<F, A> j) => F.FMap(j, h));
+
+         assertAreEqual(lhs(testSample),
+                        rhs(testSample));
       }
-
-
    }
-
 }

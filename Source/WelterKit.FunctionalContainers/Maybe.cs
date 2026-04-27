@@ -28,7 +28,7 @@ public partial class Maybe : IApplicative<Maybe> {
       => new Some<A>(a);
 
 
-   public static K<Maybe, B> Apply<A, B>(K<Maybe, A> fa, K<Maybe, Func<A, B>> ffunc)
+   public static K<Maybe, B> Apply<A, B>(K<Maybe, Func<A, B>> ffunc, K<Maybe, A> fa)
       => fa.As() switch
          {
             None<A> => new None<B>(),

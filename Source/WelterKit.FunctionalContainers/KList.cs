@@ -22,7 +22,7 @@ partial class KList : IApplicative<KList> {
       => new KList<A>([a]);
 
 
-   public static K<KList, B> Apply<A, B>(K<KList, A> fa, K<KList, Func<A, B>> ffunc)
+   public static K<KList, B> Apply<A, B>(K<KList, Func<A, B>> ffunc, K<KList, A> fa)
       => new KList<B>((from a in fa.As().List
                        from func in ffunc.As().List
                        select func(a)
