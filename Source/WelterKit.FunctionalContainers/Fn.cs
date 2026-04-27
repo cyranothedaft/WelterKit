@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WelterKit.FunctionalContainers_tests;
+namespace WelterKit.FunctionalContainers;
 
 public static class Fn {
    public static Func<A, C> Compose<A, B, C>(Func<B, C> f, Func<A, B> g)

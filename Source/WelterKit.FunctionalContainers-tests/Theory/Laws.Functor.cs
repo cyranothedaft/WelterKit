@@ -3,8 +3,7 @@ using WelterKit.FunctionalContainers.Framework;
 using WelterKit.FunctionalContainers.Framework.Kinds;
 
 
-
-namespace WelterKit.FunctionalContainers_tests;
+namespace WelterKit.FunctionalContainers_tests.Theory;
 
 internal static partial class Laws {
 

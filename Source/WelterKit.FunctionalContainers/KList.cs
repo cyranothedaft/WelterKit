@@ -38,9 +38,4 @@ public static class KListExtensions {
          where A : IEquatable<A>
          where B : IEquatable<B>
       => KList.FMap(a, func);
-
-
-   // public static K<KList, A> Pure<A>(this A a) => KList.Pure(a);
-   // public static K<KList, B> Apply<A, B>(this K<KList, A> fa, K<KList,Func<A, B>> func) => KList.Apply(fa, func);
-
 }
