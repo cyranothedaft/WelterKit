@@ -2,7 +2,7 @@
 using WelterKit.FunctionalContainers.Containers;
 
 
-namespace WelterKit.FunctionalContainers_tests.Maybe_tests;
+namespace WelterKit.FunctionalContainers_tests.ContainerTests.Maybe_tests;
 
 [TestClass]
 public class SampleUsage_Functor {

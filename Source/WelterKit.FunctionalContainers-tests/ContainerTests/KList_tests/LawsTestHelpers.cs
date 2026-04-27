@@ -2,7 +2,7 @@
 using WelterKit.FunctionalContainers.Containers;
 
 
-namespace WelterKit.FunctionalContainers_tests.KList_tests;
+namespace WelterKit.FunctionalContainers_tests.ContainerTests.KList_tests;
 
 internal static class LawsTestHelpers {
    internal static void Multitest<A, B, C>(( KList<Func<B, C>> u,

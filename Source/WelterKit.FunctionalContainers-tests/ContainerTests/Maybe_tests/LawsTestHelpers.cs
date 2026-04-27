@@ -2,7 +2,7 @@
 using WelterKit.FunctionalContainers.Containers;
 
 
-namespace WelterKit.FunctionalContainers_tests.Maybe_tests;
+namespace WelterKit.FunctionalContainers_tests.ContainerTests.Maybe_tests;
 
 internal static class LawsTestHelpers {
    internal static void Multitest<A, B, C>(( Maybe<Func<B, C>> u,

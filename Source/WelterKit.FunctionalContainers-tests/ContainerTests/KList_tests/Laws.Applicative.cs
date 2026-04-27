@@ -5,7 +5,7 @@ using WelterKit.FunctionalContainers.Containers;
 using WelterKit.FunctionalContainers.Framework;
 
 
-namespace WelterKit.FunctionalContainers_tests.KList_tests;
+namespace WelterKit.FunctionalContainers_tests.ContainerTests.KList_tests;
 
 [TestClass]
 public class Laws_Applicative {
