@@ -5,7 +5,8 @@ using WelterKit.FunctionalContainers.Framework;
 using WelterKit.FunctionalContainers.Framework.Kinds;
 
 
-namespace WelterKit.FunctionalContainers;
+namespace WelterKit.FunctionalContainers.Containers;
+
 
 public record KList<A>(ImmutableList<A> List) : K<KList, A>;
 

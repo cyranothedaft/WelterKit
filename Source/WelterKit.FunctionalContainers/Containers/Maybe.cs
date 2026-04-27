@@ -3,8 +3,8 @@ using WelterKit.FunctionalContainers.Framework;
 using WelterKit.FunctionalContainers.Framework.Kinds;
 
 
+namespace WelterKit.FunctionalContainers.Containers;
 
-namespace WelterKit.FunctionalContainers;
 
 public abstract partial record Maybe<A> : K<Maybe, A>;
 public          partial record Some <A>(A Value) : Maybe<A>;
