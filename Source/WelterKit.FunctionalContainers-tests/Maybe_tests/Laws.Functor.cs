@@ -7,28 +7,35 @@ namespace WelterKit.FunctionalContainers_tests.Maybe_tests;
 [TestClass]
 public class Laws_Functor {
 
-   private static T id<T>(T x) => x;
-
-
-   // Functors must preserve identity
    [TestMethod]
    public void Identity_Simple_Some() {
-      Maybe<int> maybe = new Some<int>(42);
-      Assert.AreEqual(42, ((Some<int>)Maybe.FMap(maybe, id)).Value);
+      Laws.Functor.Identity(new Some<int>(42),
+                            Assert.AreEqual);
    }
 
 
-   // Functors must preserve composition
    [TestMethod]
-   public void Composition_Simple() {
-      Func<string, string> f = x => x + "$";
-      Func<int, string> g = x => x.ToString();
+   public void Identity_Simple_None() {
+      Laws.Functor.Identity(new None<int>(),
+                            Assert.AreEqual);
+   }
 
-      Maybe<int> maybe = new Some<int>(42);
 
-      Assert.AreEqual((Maybe<string>)Maybe.FMap(Maybe.FMap(maybe, g), f),
-                      (Maybe<string>)Maybe.FMap(maybe, x => f(g(x))));
+   [TestMethod]
+   public void Composition_Simple_Some() {
+      Laws.Functor.Composition(new Some<int>(42),
+                               (string x) => x + "$",
+                               (int x) => x.ToString(),
+                               Assert.AreEqual);
+   }
 
+
+   [TestMethod]
+   public void Composition_Simple_None() {
+      Laws.Functor.Composition(new None<int>(),
+                               (string x) => x + "$",
+                               (int x) => x.ToString(),
+                               Assert.AreEqual);
    }
 
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using WelterKit.FunctionalContainers;
+using WelterKit.FunctionalContainers.Framework;
+
 
 
 namespace WelterKit.FunctionalContainers_tests.KList_tests;
@@ -8,28 +10,39 @@ namespace WelterKit.FunctionalContainers_tests.KList_tests;
 [TestClass]
 public class Laws_Functor {
 
-   private static T id<T>(T x) => x;
-
-
-   // Functors must preserve identity
    [TestMethod]
    public void Identity_Simple() {
-      KList<int> list = new KList<int>([1, 42, 999]);
-      CollectionAssert.AreEqual(list.List,
-                                ((KList<int>)KList.FMap(list, id)).List);
+      Laws.Functor.Identity(new KList<int>([1, 42, 999]),
+                            collectionAssert_areEqual);
    }
 
 
-   // Functors must preserve composition
+   [TestMethod]
+   public void Identity_Simple_Empty() {
+      Laws.Functor.Identity(new KList<int>([]),
+                            collectionAssert_areEqual);
+   }
+
+
    [TestMethod]
    public void Composition_Simple() {
-      Func<string, string> f = x => x + "$";
-      Func<int, string> g = x => x.ToString();
-
-      KList<int> list = new KList<int>([1, 42, 999]);
-
-      CollectionAssert.AreEqual(list.List.Select(g).Select(f).ToList(),
-                                list.List.Select(x => f(g(x))).ToList());
+      Laws.Functor.Composition(new KList<int>([1, 42, 999]),
+                               static (string x) => x + "$",
+                               static (int x) => x.ToString(),
+                               collectionAssert_areEqual);
    }
 
+
+   [TestMethod]
+   public void Composition_Simple_Empty() {
+      Laws.Functor.Composition(new KList<int>([]),
+                               static (string x) => x + "$",
+                               static (int x) => x.ToString(),
+                               collectionAssert_areEqual);
+   }
+
+
+   private static void collectionAssert_areEqual<A>(K<KList, A> fa, K<KList, A> fb)
+      => CollectionAssert.AreEqual(fa.As().List,
+                                   fb.As().List);
 }

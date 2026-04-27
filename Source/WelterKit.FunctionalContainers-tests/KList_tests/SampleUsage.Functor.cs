@@ -11,9 +11,9 @@ public class SampleUsage_Functor {
       string sampleMap(int num) => $"{num,3}/2 = {(decimal)num / 2,5:###.0}";
       KList<int> list = new KList<int>([1, 42, 999]);
 
-      KList<string> newList = (KList<string>)KList.FMap(list, sampleMap);
+      KList<string> newList = KList.FMap(list, sampleMap).As();
 
-//TODO      print
+      //TODO      print
 
       CollectionAssert.AreEqual(new[]
                                    {
