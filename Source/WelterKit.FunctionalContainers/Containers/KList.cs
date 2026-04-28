@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using WelterKit.FunctionalContainers.Framework;
@@ -50,10 +49,4 @@ partial class KList : IMonad<KList> {
 
 public static class KListExtensions {
    public static KList<A> As<A>(this K<KList, A> ma) => (KList<A>)ma;
-
-
-   public static K<KList, B> FMap<A, B>(this K<KList, A> a, Func<A, B> func)
-         where A : IEquatable<A>
-         where B : IEquatable<B>
-      => KList.FMap(a, func);
 }

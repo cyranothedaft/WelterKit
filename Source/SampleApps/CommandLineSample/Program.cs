@@ -3,9 +3,8 @@ using System.CommandLine;
 using System.IO;
 using System.Text;
 using WelterKit.Extensions.SystemCommandLine;
+using WelterKit.FunctionalContainers.Containers;
 using WelterKit.Std;
-using WelterKit.Std.Functional;
-
 
 
 namespace CommandLineSample;
@@ -31,8 +30,8 @@ internal static class Program {
 
    private static int run(Func<Either<IError, StringBuilder>> command) {
       return command()
-            .Map(handleResult)
-            .Reduce(handleError);
+           .Match(handleResult,
+                  handleError);
 
       int handleResult(StringBuilder result) {
          Console.WriteLine(result);

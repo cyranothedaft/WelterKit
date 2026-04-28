@@ -59,10 +59,23 @@ public static class Either {
 
 
 
-public partial record Either<L, R> {
+partial record Either<L, R> {
+   public abstract B Match<B>(Func<R, B> rightFunc, Func<L, B> leftFunc);
+
    public static implicit operator Either<L, R>(L leftValue ) => new Left <L, R>(leftValue);
    public static implicit operator Either<L, R>(R rightValue) => new Right<L, R>(rightValue);
 }
+
+
+
+partial record Left<L, R> {
+   public override B Match<B>(Func<R, B> rightFunc, Func<L, B> leftFunc) => leftFunc(this.Value);
+}
+
+partial record Right<L, R> {
+   public override B Match<B>(Func<R, B> rightFunc, Func<L, B> leftFunc) => rightFunc(this.Value);
+}
+
 
 
 public static class EitherExtensions {

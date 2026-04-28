@@ -5,7 +5,7 @@ using WelterKit.Std;
 namespace CommandLineSample;
 
 
-internal record Error(string DisplayText) :IError;
+internal record Error(string DisplayText) : IError;
 
 
 internal record ExceptionError(Exception Exception, string WhileDoing) : Error(format(Exception, WhileDoing)) {

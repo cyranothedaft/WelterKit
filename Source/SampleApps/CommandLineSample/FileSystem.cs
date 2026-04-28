@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using WelterKit.FunctionalContainers.Containers;
 using WelterKit.Std;
-using WelterKit.Std.Functional;
-
 
 
 namespace CommandLineSample;
