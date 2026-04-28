@@ -22,9 +22,7 @@ public partial class Either<L> : IFunctor<Either<L>> {
 }
 
 
-
 public partial class Either<L> : IApplicative<Either<L>> {
-
    public static K<Either<L>, A> Pure<A>(A a)
       => new Right<L, A>(a);
 
@@ -41,6 +39,18 @@ public partial class Either<L> : IApplicative<Either<L>> {
             _              => throw new ArgumentOutOfRangeException()
          };
 }
+
+
+public partial class Either<L> : IMonad<Either<L>> {
+   public static K<Either<L>, B> Bind<A, B>(K<Either<L>, A> ma, Func<A, K<Either<L>, B>> f)
+      => ma.As() switch
+         {
+            Left <L, A> lt => new Left<L, B>(lt.Value),
+            Right<L, A> rt => f(rt.Value),
+            _              => throw new ArgumentOutOfRangeException()
+         };
+}
+
 
 
 public static class Either {
