@@ -53,13 +53,12 @@ public partial class Either<L> : IMonad<Either<L>> {
 
 
 
-public static class Either {
-   public static Either<L, RNew> FMap<L, R, RNew>(Either<L, R> fa, Func<R, RNew> func) => Either<L>.FMap(fa, func).As();
-}
-
-
-
 partial record Either<L, R> {
+   // TODO: do this and make Left and Right inner classes of Either ?  (and consider doing the same for Maybe/Some/None?)
+   // // Prevent other types deriving from Either
+   // private Either() { }
+
+
    public abstract B Match<B>(Func<R, B> rightFunc, Func<L, B> leftFunc);
 
    public static implicit operator Either<L, R>(L leftValue ) => new Left <L, R>(leftValue);
@@ -74,10 +73,4 @@ partial record Left<L, R> {
 
 partial record Right<L, R> {
    public override B Match<B>(Func<R, B> rightFunc, Func<L, B> leftFunc) => rightFunc(this.Value);
-}
-
-
-
-public static class EitherExtensions {
-   public static Either<L,R> As<L, R>(this K<Either<L>, R> ma) => (Either<L, R>)ma;
 }
