@@ -7,7 +7,7 @@ using WelterKit.FunctionalContainers.Framework.Kinds;
 namespace WelterKit.FunctionalContainers_tests.ContainerTests.Either_tests;
 
 [TestClass]
-public class SampleUsage_Functor {
+public class SampleUsage {
    [TestMethod]
    public void FMap_Sample() {
       string sampleMap(int num) => $"{num,3}/2 = {(decimal)num / 2,5:###.0}";
