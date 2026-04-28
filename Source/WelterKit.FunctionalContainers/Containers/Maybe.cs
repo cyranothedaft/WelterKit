@@ -23,7 +23,7 @@ public partial class Maybe : IFunctor<Maybe> {
 
 
 
-public partial class Maybe : IApplicative<Maybe> {
+partial class Maybe : IApplicative<Maybe> {
    public static K<Maybe, A> Pure<A>(A a)
       => new Some<A>(a);
 
@@ -42,6 +42,17 @@ public partial class Maybe : IApplicative<Maybe> {
          };
 }
 
+
+
+partial class Maybe : IMonad<Maybe> {
+   public static K<Maybe, B> Bind<A, B>(K<Maybe, A> ma, Func<A, K<Maybe, B>> f)
+      => ma.As() switch
+         {
+            None<A>      => new None<B>(),
+            Some<A> some => f(some.Value),
+            _            => throw new ArgumentOutOfRangeException()
+         };
+}
 
 
 public static class MaybeExtensions {

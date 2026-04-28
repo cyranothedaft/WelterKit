@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using WelterKit.FunctionalContainers.Framework;
@@ -28,6 +29,22 @@ partial class KList : IApplicative<KList> {
                        from func in ffunc.As().List
                        select func(a)
                       ).ToImmutableList());
+}
+
+
+
+partial class KList : IMonad<KList> {
+   // bind :: (M a) -> (a -> M b) -> (M b)
+   // ma >>= f  =  join (fmap f ma)
+   public static K<KList, B> Bind<A, B>(K<KList, A> ma, Func<A, K<KList, B>> f)
+      => join(FMap(ma, f));
+
+
+   // join :: m (m a) -> m a
+   private static K<KList, A> join<A>(K<KList, K<KList, A>> mma)
+      => new KList<A>(mma.As().List.SelectMany(innerList => innerList.As().List)
+                                   .ToImmutableList());
+
 }
 
 
