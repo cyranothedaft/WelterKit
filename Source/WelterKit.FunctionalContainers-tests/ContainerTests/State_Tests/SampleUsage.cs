@@ -6,7 +6,8 @@ namespace WelterKit.FunctionalContainers_tests.ContainerTests.State_Tests;
 public class SampleUsage {
    [TestMethod]
    public void xxx() {
-
+      Assert.AreEqual(8, gcd(1024, 40));
+      Assert.AreEqual(8, run_gcd_(1024, 40));
    }
 
 
@@ -24,20 +25,21 @@ public class SampleUsage {
 
    private record GcdState(int X, int Y);
 
-   //   gcd' :: GCDState -> (Int, GCDState)
-   // gcd' s = 
-   //   let (x, y) = s in   -- unpack the state into x, y
-   //     case compare x y of
-   //       EQ -> (x, s)       -- if x == y, return x and the state tuple
-   //       LT -> gcd' (y, x)  -- if x < y, flip the arguments
-   //       GT -> gcd' (y, x - y)
-   //
-   private static (int, GcdState) gcd_(GcdState s) {
-      (int x,int y) = s;
-      return x.CompareTo(y) switch {
-            0 =>(x,initialState: s),
-            <0=>gcd_(new GcdState( y,x)),
-            _ => gcd_((y,x-y))
+   // "stateful" version of gcd
+   private static (GcdState state, int value) gcd_(GcdState s)
+      => s.X.CompareTo(s.Y) switch
+         {
+            0   => (s, s.X),
+            < 0 => gcd_(new GcdState(s.Y, s.X)),
+            _   => gcd_(new GcdState(s.Y, s.X - s.Y))
          };
-   }
+
+   // helper for running it
+   // run_gcd' :: Int -> Int -> Int
+   // run_gcd' x y = fst (gcd' (x, y))
+   private static int run_gcd_(int x, int y)
+      => gcd_(new GcdState(x, y)).value;
+
+
+
 }
