@@ -14,5 +14,6 @@ public interface IMonad<M> : IFunctor<M>, IApplicative<M> where M : IMonad<M> {
 
 
 public static class MonadExtensions {
+   public static K<M, A> Return<M, A>(this A a)                             where M : IMonad<M> => M.Return(a);
    public static K<M, B> Bind<M, A, B>(this K<M, A> ma, Func<A, K<M, B>> f) where M : IMonad<M> => M.Bind(ma, f);
 }
