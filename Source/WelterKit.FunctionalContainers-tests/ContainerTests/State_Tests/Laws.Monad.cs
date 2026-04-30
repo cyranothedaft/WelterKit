@@ -1,125 +1,101 @@
 ﻿using System;
-using System.Linq;
 using WelterKit.FunctionalContainers_tests.Theory;
 using WelterKit.FunctionalContainers.Containers;
-using WelterKit.FunctionalContainers.Framework;
 
 
 namespace WelterKit.FunctionalContainers_tests.ContainerTests.State_tests;
 
 [TestClass]
 public class Laws_Monad {
-=====TODO=====
    [TestMethod]
    public void LeftIdentity() {
-      static State<string> func1(int a)     => a > 0 ? new Some<string>($"positive:{a}") : new None<string>();
-      static State<int>    func2(decimal a) => decimal.IsInteger(a) ? new Some<int>((int)a) : new None<int>();
-      static State<int>    func3(string a)  => int.TryParse(a, out int i) ? new Some<int>(i) : new None<int>();
-      static State<float>  func4(string? a) => a is not null && float.TryParse(a!, out float f) ? new Some<float>(f) : new None<float>();
+      State<int, string> func1(string x) => new(s => (s, x + "$"));
 
-      var testValues1 = new int[] { -42, -1, 0, 1, 42, 999 };
-      var testValues2 = new decimal[] { -999.999M, -42M, -1M, -0.1M, decimal.Zero, 0.1M, 1M, 42M, 42.42M, 99.999M };
-      var testValues3 = new string[] { string.Empty, "X", "42", "abc XYZ", "42.86" };
-      var testValues4 = new string?[] { string.Empty, "X", "42", "abc XYZ", "42.86", null };
+      Func<string, State<int, string>>[] funcs1 = [func1];
 
-      multitestLeftIdentity(func1, testValues1);
-      multitestLeftIdentity(func2, testValues2);
-      multitestLeftIdentity(func3, testValues3);
-      multitestLeftIdentity(func4, testValues4);
+      string[] testValues1 = [string.Empty, "X", "42", "abc XYZ"];
+
+      int[] initialStates1 = [int.MinValue, -42, -1, 0, 1, 42, int.MaxValue];
+
+      multitestLeftIdentity(funcs1, testValues1, initialStates1);
+
+      // TODO: more...
    }
 
 
    [TestMethod]
    public void RightIdentity() {
-      var testValues1 = new State<int>[]
-                           {
-                              new None<int>(),
-                              new Some<int>(0),
-                              new Some<int>(42),
-                           };
-      var testValues2 = new State<float>[]
-                           {
-                             new None<float>(),
-                             new Some<float>(0),
-                             new Some<float>(42.42f),
-                           };
-      var testValues3 = new State<string>[]
-                           {
-                             new None<string>(),
-                             new Some<string>(string.Empty),
-                             new Some<string>("abc XYZ"),
-                           };
-      var testValues4 = new State<string?>[]
-                           {
-                             new None<string?>(),
-                             new Some<string?>(null),
-                             new Some<string?>("abc XYZ"),
-                           };
+      State<int, int>[] testStates1 =
+         [
+            new(x => (x, x)),
+            new(x => (x + 1, x - 1)),
+            new(_ => (0, 0))
+         ];
 
-      multitestRightIdentity(testValues1);
-      multitestRightIdentity(testValues2);
-      multitestRightIdentity(testValues3);
-      multitestRightIdentity(testValues4);
+      int[] initialStates1 = [int.MinValue, -42, -1, 0, 1, 42, int.MaxValue];
+
+      multitestRightIdentity(testStates1, initialStates1);
+
+      // TODO: more...
    }
 
 
    [TestMethod]
    public void Associativity() {
-      var funcs1 = (g: (Func<int, State<string>>)(static x => x % 2       == 0 ? new Some<string>($"even:{x}") : new None<string>()),
-                    h: (Func<string, State<string>>)(static x => x.Length > 0 ? new Some<string>($"some:{x}") : new None<string>()));
+      ( Func<int,    State<int, string>>,
+        Func<string, State<int, string>> ) funcs1 = ( g: n   => new State<int, string>(s => (s, n.ToString())),
+                                                      h: str => new State<int, string>(s => (s, str + "$"))   );
 
-      var funcs2 = (g: (Func<string, State<float>>)(static x => x.Length > 0 ? new Some<float>(x.Average(ch => (float)(int)ch)) : new None<float>()),
-                    h: (Func<float, State<float>>)(static x => x         > 0 ? new Some<float>(x * x) : new None<float>()));
+      State<int, int>[] testStates1 =
+         [
+            new(x => (x, x)),
+            new(x => (x + 1, x - 1)),
+            new(_ => (0, 0))
+         ];
 
-      var testValues1 = new State<int>[]
-                           {
-                              new None<int>(),
-                              new Some<int>(0),
-                              new Some<int>(41),
-                              new Some<int>(42),
-                           };
-      var testValues2 = new State<string>[]
-                           {
-                             new None<string>(),
-                             new Some<string>(string.Empty),
-                             new Some<string>("42 abc 42 xyz"),
-                           };
+      int[] initialStates1 = [int.MinValue, -42, -1, 0, 1, 42, int.MaxValue];
 
-      multitestAssociativity(funcs1, testValues1);
-      multitestAssociativity(funcs2, testValues2);
+      multitestAssociativity(funcs1, testStates1, initialStates1);
+
+      // TODO: more...
    }
 
 
-   private void multitestLeftIdentity<A,B>(Func<A, State<B>> func, A[] testValues) {
+   private void multitestLeftIdentity<S, A, B>(Func<A, State<S, B>>[] funcs, A[] testValues, S[] sampleInitialStates) {
+      foreach (Func<A, State<S, B>> func in funcs)
       foreach (A testValue in testValues)
-         testLeftIdentity(func, testValue);
+      foreach (S initialState in sampleInitialStates)
+         testLeftIdentity(func, testValue, initialState);
    }
 
 
-   private void multitestRightIdentity<A>(State<A>[] testValues) {
-      foreach (State<A> testValue in testValues)
-         testRightIdentity(testValue);
+   private void multitestRightIdentity<S, A>(State<S, A>[] testStates, S[] sampleInitialStates) {
+      foreach (State<S, A> testState in testStates)
+      foreach (S initialState in sampleInitialStates)
+         testRightIdentity(testState, initialState);
    }
 
 
-   private void multitestAssociativity<A, B>(( Func<A, State<B>> g,
-                                               Func<B, State<B>> h ) funcs,
-                                             State<A>[] testValues) {
-      foreach (State<A> testValue in testValues)
-         testAssociativity(funcs.g, funcs.h, testValue);
+   private void multitestAssociativity<S, A, B>(( Func<A, State<S, B>> g,
+                                                  Func<B, State<S, B>> h ) funcs,
+                                                State<S, A>[] testStates,
+                                                S[] sampleInitialStates) {
+      foreach (State<S, A> testState in testStates)
+      foreach (S initialState in sampleInitialStates)
+         testAssociativity(funcs.g, funcs.h, testState, initialState);
    }
 
 
-   private static void testLeftIdentity<A, B>(Func<A, State<B>> testFunc, A testValue)
-      => Laws.Monad.LeftIdentity(testValue, testFunc, Assert.AreEqual);
+   private static void testLeftIdentity<S, A, B>(Func<A, State<S, B>> testFunc, A testValue, S sampleInitialState)
+      => Laws.Monad.LeftIdentity(testValue, testFunc, LawsTestHelpers.AreEqualFromState<S, B>(sampleInitialState));
 
 
-   private static void testRightIdentity<A>(State<A> testList)
-      => Laws.Monad.RightIdentity(testList, Assert.AreEqual);
+   private static void testRightIdentity<S, A>(State<S, A> testState, S sampleInitialState)
+      => Laws.Monad.RightIdentity(testState, LawsTestHelpers.AreEqualFromState<S, A>(sampleInitialState));
 
 
-   private static void testAssociativity<A, B>(Func<A, State<B>> g,
-                                               Func<B, State<B>> h,
-                                               State<A> testValue)
-      => Laws.Monad.Associativity(testValue, g, h, Assert.AreEqual);
+   private static void testAssociativity<S, A, B>(Func<A, State<S, B>> g,
+                                                  Func<B, State<S, B>> h,
+                                                  State<S, A> testState, S sampleInitialState)
+      => Laws.Monad.Associativity(testState, g, h, LawsTestHelpers.AreEqualFromState<S, B>(sampleInitialState));
 }

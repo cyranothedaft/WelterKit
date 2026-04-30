@@ -32,7 +32,7 @@ public class Laws_Applicative {
    [TestMethod]
    public void Composition() {
       ( State<int, Func<string, string>> u,
-        State<int, Func<int, string>>    v) funcs1 = ( u: new State<int, Func<string, string>>(s => (s, str => str + "$")),
+        State<int, Func<int,    string>> v) funcs1 = ( u: new State<int, Func<string, string>>(s => (s, str => str + "$")),
                                                        v: new State<int, Func<int, string>>   (s => (s, n => n.ToString())) );
 
       State<int, int>[] testStates1 =
