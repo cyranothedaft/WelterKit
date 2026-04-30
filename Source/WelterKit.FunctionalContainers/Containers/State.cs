@@ -7,8 +7,8 @@ namespace WelterKit.FunctionalContainers.Containers;
 
 // newtype State s a = State { runState :: s -> (s, a) }
 
-// TODO: abstract or interface (or maybe just extract an interface for the method signatures)
-// TODO: figure out a 'newstate'-like way of avoiding actually creating new instances of this
+// TODO: abstract or interface (or maybe just extract an interface for the method signatures) ?
+// TODO: figure out a 'newtype'-like way of avoiding actually creating new instances of this
 public record State<S, A>(Func<S, (S state, A value)> runState) : K<State<S>, A>;
 
 
