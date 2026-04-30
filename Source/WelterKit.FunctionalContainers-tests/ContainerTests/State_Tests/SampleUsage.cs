@@ -1,8 +1,6 @@
 ﻿using System;
 using WelterKit.FunctionalContainers.Containers;
-using WelterKit.FunctionalContainers.Framework;
 using WelterKit.FunctionalContainers.Framework.Kinds;
-
 
 
 namespace WelterKit.FunctionalContainers_tests.ContainerTests.State_Tests;
@@ -10,10 +8,32 @@ namespace WelterKit.FunctionalContainers_tests.ContainerTests.State_Tests;
 [TestClass]
 public class SampleUsage {
    [TestMethod]
-   public void xxx() {
+   public void TestGcdFuncs() {
       Assert.AreEqual(8, gcd(1024, 40));
       Assert.AreEqual(8, run_gcd_(1024, 40));
       Assert.AreEqual(8, run_gcd_s1_(1024, 40));
+      Assert.AreEqual(8, run_gcd_s2(1024, 40));
+   }
+
+
+   [TestMethod]
+   public void StateSamples() {
+      State<int, int> incrementWithState = State<int>.get
+                                                     .Bind(current => {
+                                                              int next = current + 1;
+                                                              return State<int>.put(next)
+                                                                               .Bind(_ => next.Return<State<int>, int>());
+                                                           }).As();
+
+      // declare a program to invoke incrementWithState three times:+
+      State<int, int> incrementThrice = incrementWithState
+                                       .Bind(_ => incrementWithState)
+                                       .Bind(_ => incrementWithState)
+                                       .As();
+
+      // run it with an initial state (i.e., input value) of 10:
+      (int state, int value) finalResult = incrementThrice.runState(10);
+      Assert.AreEqual((13, 13), finalResult);
    }
 
 
@@ -92,21 +112,18 @@ public class SampleUsage {
    //       LT -> (putState (y, x) >> gcd_s2)
    //       GT -> (putState (y, x - y) >> gcd_s2))
    //
-   private static State<GcdState, int> gcd_s2() {
-      State<GcdState, GcdState> a=State<GcdState>.get;
-      State<GcdState, int> b=a
-                            .Bind(xy => {
-                                     (int x, int y) = xy;
-                                     return x.CompareTo(y) switch
-                                        {
-                                           0   => x.Return<State<GcdState>, int>(),
-                                           < 0 => State<GcdState>.put(new GcdState(y, x)).Bind(_ => gcd_s2()), // TODO: write and use "bind2" or something similar for the ">>" operation
-                                           _   => State<GcdState>.put(new GcdState(y, x - y)).Bind(_ => gcd_s2())
-                                        };
-                                  })
-                            .As();
-      return b=====;
-   }
+   private static State<GcdState, int> gcd_s2 { get; }
+      = State<GcdState>.get
+                        .Bind<State<GcdState>, GcdState, int>(xy => {
+                                                                    (int x, int y) = xy;
+                                                                    return x.CompareTo(y) switch
+                                                                       {
+                                                                          0   => x.Return<State<GcdState>, int>(),
+                                                                          < 0 => State<GcdState>.put(new GcdState(y, x)).Bind(_ => gcd_s2), // TODO: write and use "bind2" or something similar for the ">>" operation
+                                                                          _   => State<GcdState>.put(new GcdState(y, x - y)).Bind(_ => gcd_s2)
+                                                                       };
+                                                                 })
+                        .As();
 
    // helpers for running these:
 
@@ -123,6 +140,11 @@ public class SampleUsage {
    // run_gcd_s1' :: Int -> Int -> Int
    // run_gcd_s1' x y = fst (runState gcd_s1' (x, y))
    private static int run_gcd_s1_(int x, int y)
-      => gcd_s1_.runState(new(x, y)).Item2;
+      => gcd_s1_.runState(new(x, y)).value;
+
+   // run_gcd_s2 :: Int -> Int -> Int
+   // run_gcd_s2 x y = fst (runState gcd_s2 (x, y))
+   private static int run_gcd_s2(int x, int y)
+      => gcd_s2.runState(new(x, y)).value;
 
 }

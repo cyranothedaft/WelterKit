@@ -9,18 +9,21 @@ namespace WelterKit.FunctionalContainers.Containers;
 
 // TODO: abstract or interface (or maybe just extract an interface for the method signatures)
 // TODO: figure out a 'newstate'-like way of avoiding actually creating new instances of this
-public record State<S, A>(Func<S, (S, A)> runState) : K<State<S>, A>;
+public record State<S, A>(Func<S, (S state, A value)> runState) : K<State<S>, A>;
 
 
 public partial class State<S> {
    // get :: State s s
    // get = State (\s -> (s, s))
+   // a state transformer that wraps a state transformer function which takes
+   //   the current state, doesn't alter it, and returns it as a value.
    public static State<S, S> get { get; }
       = new(s => (s, s));
 
 
    // put :: s -> State s ()
    // put s = State $ \_ -> ((), s). 
+   // a function which returns a state transformer given a state value
    public static State<S, Unit> put(S s)
       => new(_ => (s, Unit.Value));
 
