@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using WelterKit.FunctionalContainers_tests.Containers;
 using WelterKit.FunctionalContainers_tests.Theory;
-using WelterKit.FunctionalContainers.Framework;
 
 
 namespace WelterKit.FunctionalContainers_tests.TestContainerTests.MatrixMult_Tests;
@@ -10,12 +11,36 @@ namespace WelterKit.FunctionalContainers_tests.TestContainerTests.MatrixMult_Tes
 public class Laws_Semigroup {
    [TestMethod]
    public void Associativity() {
+      Matrix<float> m2sq_0 = new(new float[,] { { 0, 0 },
+                                                { 0, 0 } });
+      Matrix<float> m2sq_42 = new(new float[,] { { 42, 42 },
+                                                 { 42, 42 } });
+      Matrix<float> m2sq_id = new(new float[,] { { 1, 0 },
+                                                 { 0, 1 } });
+      // var mm2sq_0 = (a: new MatrixMult<float>(m2sq_0),
+      //                b: new MatrixMult<float>(m2sq_0),
+      //                c: new MatrixMult<float>(m2sq_0));
+      MatrixMult<float>[] matrices1 = new[] { m2sq_0, m2sq_42, m2sq_id }
+                                      .Select(m => new MatrixMult<float>(m))
+                                      .ToArray();
 
-      int[,][] matrices1 = [
-         
-         ];
+      multitestAssociativity(allTripletCombos(matrices1));
 
       // TODO: more...
+   }
+
+
+   private IEnumerable<(T, T, T)> allTripletCombos<T>(ICollection<T> source)
+         // TODO: improve/optimize?
+      => from a in source
+         from b in source
+         from c in source
+         select (a, b, c);
+
+
+   private void multitestAssociativity<A>(IEnumerable<(MatrixMult<A> a, MatrixMult<A> b, MatrixMult<A> c)> triplets) {
+      foreach (var triplet in triplets)
+         testAssociativity(triplet);
    }
 
 
