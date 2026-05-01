@@ -2,7 +2,12 @@
 
 namespace WelterKit.FunctionalContainers.Framework.Kinds;
 
-public interface ISemigroup<F> where F : ISemigroup<F> { 
+public interface ISemigroup<M> where M : ISemigroup<M> {
+
+   public M Combine(M rhs);
+
    // ===
-   public static abstract K<F, A> Combine<A>(K<F, A> a1, K<F, A> a2);
+   public static virtual M Combine(M a, M b) => a.Combine(b);
+
+   //public static abstract K<M, A> Combine<A>(K<M, A> a1, K<M, A> a2);
 }

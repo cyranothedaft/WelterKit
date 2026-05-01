@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using WelterKit.FunctionalContainers_tests.Containers;
 using WelterKit.FunctionalContainers_tests.Theory;
 
@@ -17,12 +18,10 @@ public class Laws_Semigroup {
                                                  { 42, 42 } });
       Matrix<float> m2sq_id = new(new float[,] { { 1, 0 },
                                                  { 0, 1 } });
-      // var mm2sq_0 = (a: new MatrixMult<float>(m2sq_0),
-      //                b: new MatrixMult<float>(m2sq_0),
-      //                c: new MatrixMult<float>(m2sq_0));
-      MatrixMult<float>[] matrices1 = new[] { m2sq_0, m2sq_42, m2sq_id }
-                                      .Select(m => new MatrixMult<float>(m))
-                                      .ToArray();
+
+      MatrixMultData<float>[] matrices1 = new[] { m2sq_0, m2sq_42, m2sq_id }
+                                          .Select(m => new MatrixMultData<float>(m))
+                                          .ToArray();
 
       multitestAssociativity(allTripletCombos(matrices1));
 
@@ -38,13 +37,15 @@ public class Laws_Semigroup {
          select (a, b, c);
 
 
-   private void multitestAssociativity<A>(IEnumerable<(MatrixMult<A> a, MatrixMult<A> b, MatrixMult<A> c)> triplets) {
+   private void multitestAssociativity<N>(IEnumerable<(MatrixMultData<N> a, MatrixMultData<N> b, MatrixMultData<N> c)> triplets)
+         where N : INumber<N> {
       foreach (var triplet in triplets)
          testAssociativity(triplet);
    }
 
 
-   private static void testAssociativity<A>((MatrixMult<A> a, MatrixMult<A> b, MatrixMult<A> c) testMatrices)
+   private static void testAssociativity<N>((MatrixMultData<N> a, MatrixMultData<N> b, MatrixMultData<N> c) testMatrices)
+         where N : INumber<N>
       => Laws.Semigroup.Associativity(testMatrices.a,
                                       testMatrices.b,
                                       testMatrices.c,

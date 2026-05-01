@@ -1,14 +1,13 @@
 ﻿using System;
+using System.Numerics;
 using WelterKit.FunctionalContainers_tests.Containers;
-using WelterKit.FunctionalContainers.Framework;
-
 
 
 namespace WelterKit.FunctionalContainers_tests.TestContainerTests.MatrixMult_Tests;
 
 
 internal static class LawsTestHelpers {
-   public static void AreMatricesEqual<A>(K<MatrixMult, A> arg1, K<MatrixMult, A> arg2) {
-      throw new NotImplementedException("TODO");
-   }
+   public static void AreMatricesEqual<N>(MatrixMultData<N> m1, MatrixMultData<N> m2) where N : INumber<N>
+      => MatrixAssert.AreEqual(m1.Value,
+                               m2.Value);
 }

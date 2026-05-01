@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Numerics;
-using WelterKit.FunctionalContainers.Framework;
 using WelterKit.FunctionalContainers.Framework.Kinds;
-
 
 
 namespace WelterKit.FunctionalContainers_tests.Containers;
@@ -13,7 +12,15 @@ namespace WelterKit.FunctionalContainers_tests.Containers;
 //            Because \(M_n(\mathbb{R})\) contains the identity matrix \(I=\left[\begin{matrix}1&0\\ 0&1\end{matrix}\right]\), it is formally a monoid (a semigroup with an identity).
 
 
-internal record MatrixMult<A>(Matrix<A> Values) : K<MatrixMult, A>;
+
+internal record MatrixMultData<N>(Matrix<N> Value) : ISemigroup<MatrixMultData<N>>
+      where N : INumber<N> {
+   MatrixMultData<N> ISemigroup<MatrixMultData<N>>.Combine(MatrixMultData<N> rhs)
+      => new(MatrixMath.Mult(this.Value,
+                             rhs.Value));
+}
+
+// internal record MatrixMultData(Matrix<double> Value) : K<MatrixMult, double>;
 
 
 // public class MatrixMult {
@@ -28,39 +35,46 @@ internal record MatrixMult<A>(Matrix<A> Values) : K<MatrixMult, A>;
 // }
 
 
-internal partial class MatrixMult : ISemigroup<MatrixMult> {
-   public static K<MatrixMult, A> Combine<A>(K<MatrixMult, A> a1, K<MatrixMult, A> a2)
-      => new MatrixMult<A>(MatrixMath.Mult(a1.As().Values,
-                                           a2.As().Values));
-}
+// internal partial class MatrixMult : ISemigroup<MatrixMult> {
+//    // public static K<MatrixMult, double> Combine(K<MatrixMult, double> a1, K<MatrixMult, double> a2)
+//    //    => new MatrixMultData(MatrixMath.Mult(a1.As().Value,
+//    //                                         a2.As().Value));
+//    public MatrixMult Combine(MatrixMult rhs) {
+//       throw new NotImplementedException();
+//    }
+// }
 
 
 
-internal static class MatrixMultExtensions {
-   public static MatrixMult<A> As<A>(this K<MatrixMult, A> ma) => (MatrixMult<A>)ma;
-}
+// internal static class MatrixMultExtensions {
+//    public static MatrixMultData As<A>(this K<MatrixMult, A> ma) => (MatrixMultData)ma;
+// }
 
 
 internal static class MatrixMath {
-   internal static Matrix<T> Mult<T>(Matrix<T> a, Matrix<T> b) {
+   internal static Matrix<N> Mult<N>(Matrix<N> a, Matrix<N> b) where N : INumber<N> {
       if (a.ColCount != b.RowCount) throw new ArgumentException($"Matrix sizes ({nameof( a )}: {a.RowCount}x{a.ColCount}, {nameof( b )}: {b.RowCount}x{b.ColCount}) are not compatible for multiplying.");
 
       // TODO: a more functional approach
-      T[,] result = new T[a.RowCount, b.ColCount];
+      N[,] result = new N[a.RowCount, b.ColCount];
 
       for (int i = 0; i < a.RowCount; ++i)
       for (int j = 0; j < b.ColCount; ++j) {
-         var row = a.RowVector(i);
-         var col = b.ColVector(j);
-         var rv = Vector.Create(row);
-         var cv = new Vector<T>(col);
-         var dot = Vector.Dot(rv, cv);
+         N[] row = a.RowVector(i);
+         N[] col = b.ColVector(j);
+         var dot = dotProduct(row, col);
          result[i, j] = dot;
 
          // result[i, j] = Vector.Dot(new Vector<T>(a.RowVector(i)),
          //                           new Vector<T>(b.ColVector(j)));
       }
 
-      return new Matrix<T>(result);
+      return new Matrix<N>(result);
    }
+
+
+   private static N dotProduct<N>(N[] u, N[] v) where N : INumber<N>
+      => Enumerable.Range(0, u.Length)
+                   .Select(i => u[i] * v[i])
+                   .Aggregate((x, y) => x + y);
 }

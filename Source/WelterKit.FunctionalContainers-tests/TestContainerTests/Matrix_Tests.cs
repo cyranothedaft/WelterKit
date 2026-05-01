@@ -2,7 +2,6 @@
 using WelterKit.FunctionalContainers_tests.Containers;
 
 
-
 namespace WelterKit.FunctionalContainers_tests.TestContainerTests;
 
 [TestClass]
@@ -23,6 +22,16 @@ public class Matrix_Tests {
       CollectionAssert.AreEqual(new[] { 1, 4 }, m.ColVector(0));
       CollectionAssert.AreEqual(new[] { 2, 5 }, m.ColVector(1));
       CollectionAssert.AreEqual(new[] { 3, 6 }, m.ColVector(2));
+   }
+
+
+   [TestMethod]
+   public void Multiply_Empty() {
+      Matrix<int> a = new(new int[0, 0]);
+      Matrix<int> b = new(new int[0, 0]);
+      Matrix<int> expected = new(new int[0, 0]);
+
+      MatrixAssert.AreEqual(expected, MatrixMath.Mult(a, b));
    }
 
 
