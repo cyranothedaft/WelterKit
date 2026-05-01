@@ -4,6 +4,7 @@ namespace WelterKit.FunctionalContainers.Framework.Kinds;
 
 public interface IMonad<M> : IFunctor<M>, IApplicative<M> where M : IMonad<M> {
    // return :: a -> M a 
+   // aka "unit"
    public static virtual K<M, A> Return<A>(A a)
       => M.Pure(a);
 
