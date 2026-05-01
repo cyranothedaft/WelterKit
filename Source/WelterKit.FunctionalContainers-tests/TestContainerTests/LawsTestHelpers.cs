@@ -3,7 +3,7 @@ using System.Numerics;
 using WelterKit.FunctionalContainers_tests.Containers;
 
 
-namespace WelterKit.FunctionalContainers_tests.TestContainerTests.MatrixMult_Tests;
+namespace WelterKit.FunctionalContainers_tests.TestContainerTests;
 
 
 internal static class LawsTestHelpers {
