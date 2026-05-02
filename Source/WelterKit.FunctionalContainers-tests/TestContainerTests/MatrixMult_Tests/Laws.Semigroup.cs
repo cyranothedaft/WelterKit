@@ -12,6 +12,8 @@ namespace WelterKit.FunctionalContainers_tests.TestContainerTests.MatrixMult_Tes
 public class Laws_Semigroup {
    [TestMethod]
    public void Associativity() {
+      // square matrices
+
       Matrix<float> m2sq_0 = new(new float[,] { { 0, 0 },
                                                 { 0, 0 } });
       Matrix<float> m2sq_42 = new(new float[,] { { 42, 42 },
@@ -25,6 +27,22 @@ public class Laws_Semigroup {
 
       multitestAssociativity(allTripletCombos(matrices1));
 
+      // nonsquare matrices
+
+      Matrix<int> a = new(new int[2, 3] { { 1, 1, 1 },
+                                          { 1, 1, 1 } });
+      Matrix<int> b = new(new int[3, 4] { { 1, 1, 1, 1 },
+                                          { 1, 1, 1, 1 },
+                                          { 1, 1, 1, 1 } });
+      Matrix<int> c = new(new int[4, 2] { { 1, 1 },
+                                          { 1, 1 },
+                                          { 1, 1 },
+                                          { 1, 1 } });
+
+      testAssociativity((new MatrixMult<int>(a),
+                         new MatrixMult<int>(b),
+                         new MatrixMult<int>(c)));
+
       // TODO: more...
    }
 
@@ -37,17 +55,16 @@ public class Laws_Semigroup {
          select (a, b, c);
 
 
-   private void multitestAssociativity<N>(IEnumerable<(MatrixMult<N> a, MatrixMult<N> b, MatrixMult<N> c)> triplets)
-         where N : INumber<N> {
-      foreach (var triplet in triplets)
-         testAssociativity(triplet);
-   }
-
-
-   private static void testAssociativity<N>((MatrixMult<N> a, MatrixMult<N> b, MatrixMult<N> c) testMatrices)
+   private void testAssociativity<N>((MatrixMult<N> a, MatrixMult<N> b, MatrixMult<N> c) triplet)
          where N : INumber<N>
-      => Laws.Semigroup.Associativity(testMatrices.a,
-                                      testMatrices.b,
-                                      testMatrices.c,
-                                      LawsTestHelpers.AreMatricesEqual);
+      => Laws.Semigroup.Associativity(triplet, LawsTestHelpers.AreMatricesEqual);
+
+
+   private void multitestAssociativity<N>(IEnumerable<(MatrixMult<N> a, MatrixMult<N> b, MatrixMult<N> c)> triplets)
+         where N : INumber<N>
+      => Laws.Semigroup.AssociativityMulti(triplets, LawsTestHelpers.AreMatricesEqual);
+
+
+   //private static Action<IEnumerable<(MatrixMult<N> a, MatrixMult<N> b, MatrixMult<N> c)>> multitestAssociativityFunc<N>() where N : INumber<N>
+   //   => Laws.Semigroup.AssociativityMulti<MatrixMult<N>>(LawsTestHelpers.AreMatricesEqual);
 }

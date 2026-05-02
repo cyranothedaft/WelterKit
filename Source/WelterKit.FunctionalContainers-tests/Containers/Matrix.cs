@@ -14,10 +14,7 @@ internal record Matrix<T>(T[,] Array) {
 
    public T[] RowVector(int r)
       => Enumerable.Range(0, ColCount)
-                   .Select(c => {
-                              Console.WriteLine($"# [{r}, {c}] of {RowCount}x{ColCount}]");
-                              return Array[r, c];
-                           })
+                   .Select(c => Array[r, c])
                    .ToArray();
 
 
