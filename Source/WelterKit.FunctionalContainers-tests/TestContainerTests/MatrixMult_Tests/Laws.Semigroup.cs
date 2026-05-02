@@ -19,8 +19,8 @@ public class Laws_Semigroup {
       Matrix<float> m2sq_id = new(new float[,] { { 1, 0 },
                                                  { 0, 1 } });
 
-      MatrixMultData<float>[] matrices1 = new[] { m2sq_0, m2sq_42, m2sq_id }
-                                          .Select(m => new MatrixMultData<float>(m))
+      MatrixMult<float>[] matrices1 = new[] { m2sq_0, m2sq_42, m2sq_id }
+                                          .Select(m => new MatrixMult<float>(m))
                                           .ToArray();
 
       multitestAssociativity(allTripletCombos(matrices1));
@@ -37,14 +37,14 @@ public class Laws_Semigroup {
          select (a, b, c);
 
 
-   private void multitestAssociativity<N>(IEnumerable<(MatrixMultData<N> a, MatrixMultData<N> b, MatrixMultData<N> c)> triplets)
+   private void multitestAssociativity<N>(IEnumerable<(MatrixMult<N> a, MatrixMult<N> b, MatrixMult<N> c)> triplets)
          where N : INumber<N> {
       foreach (var triplet in triplets)
          testAssociativity(triplet);
    }
 
 
-   private static void testAssociativity<N>((MatrixMultData<N> a, MatrixMultData<N> b, MatrixMultData<N> c) testMatrices)
+   private static void testAssociativity<N>((MatrixMult<N> a, MatrixMult<N> b, MatrixMult<N> c) testMatrices)
          where N : INumber<N>
       => Laws.Semigroup.Associativity(testMatrices.a,
                                       testMatrices.b,

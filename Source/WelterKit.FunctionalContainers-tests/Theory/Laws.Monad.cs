@@ -7,13 +7,7 @@ namespace WelterKit.FunctionalContainers_tests.Theory;
 
 internal static partial class Laws {
 
-   internal static class Monad{
-
-      // Left identity:   return a  >>= h       ≡  h a
-      // Right identity:  m         >>= return  ≡  m
-      // Associativity:   (m >>= g) >>= h       ≡  m >>= (\x -> g x >>= h)
-
-
+   internal static class Monad {
       // Left identity:   return a  >>= h  ≡  h a
       public static void LeftIdentity<M, A, B>(A a,
                                                Func<A, K<M, B>> h,
@@ -46,12 +40,10 @@ internal static partial class Laws {
                                                Action<K<M, B>, K<M, B>> assertAreEqual)
             where M : IMonad<M> {
          
-         var lhs = ma.Bind(g)
-                     .Bind(h);
+         var lhs = ma.Bind(g).Bind(h);
          var rhs = ma.Bind(x => g(x).Bind(h));
 
          assertAreEqual(lhs, rhs);
       }
    }
-
 }

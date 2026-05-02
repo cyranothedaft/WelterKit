@@ -7,7 +7,7 @@ namespace WelterKit.FunctionalContainers_tests.TestContainerTests;
 
 
 internal static class LawsTestHelpers {
-   public static void AreMatricesEqual<N>(MatrixMultData<N> m1, MatrixMultData<N> m2) where N : INumber<N>
+   public static void AreMatricesEqual<N>(MatrixMult<N> m1, MatrixMult<N> m2) where N : INumber<N>
       => MatrixAssert.AreEqual(m1.Value,
                                m2.Value);
 }

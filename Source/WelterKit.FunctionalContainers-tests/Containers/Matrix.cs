@@ -56,11 +56,11 @@ internal static class MatrixMath {
                    .Aggregate((x, y) => x + y);
 
 
-   public static SquareMatrixMultData_3<N> Identity<N>(int size) where N : INumber<N> {
+   public static SquareMatrixMult3<N> Identity<N>(int size) where N : INumber<N> {
       N[,] array = new N[3, 3];
       for (int i = 0; i < size; ++i)
       for (int j = 0; j < size; ++j)
          array[i, j] = (i == j ? N.One : N.Zero);
-      return new SquareMatrixMultData_3<N>(new Matrix<N>(array));
+      return new SquareMatrixMult3<N>(new Matrix<N>(array));
    }
 }

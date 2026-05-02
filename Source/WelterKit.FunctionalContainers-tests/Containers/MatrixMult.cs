@@ -9,13 +9,10 @@ namespace WelterKit.FunctionalContainers_tests.Containers;
 // Represents matrices with the (notable non-commutative) multiplication operation.
 
 
-internal partial record MatrixMultData<N>(Matrix<N> Value) : ISemigroup<MatrixMultData<N>> where N : INumber<N> {
-   public MatrixMultData<N> Combine(MatrixMultData<N> rhs)
+internal partial record MatrixMult<N>(Matrix<N> Value) : ISemigroup<MatrixMult<N>>
+      where N : INumber<N> {
+
+   public MatrixMult<N> Combine(MatrixMult<N> rhs)
       => new(MatrixMath.Mult(this.Value,
                              rhs.Value));
-
-
-   // MatrixMultData<N> ISemigroup<MatrixMultData<N>>.Combine(MatrixMultData<N> rhs)
-   //    => new(MatrixMath.Mult(this.Value,
-   //                           rhs.Value));
 }

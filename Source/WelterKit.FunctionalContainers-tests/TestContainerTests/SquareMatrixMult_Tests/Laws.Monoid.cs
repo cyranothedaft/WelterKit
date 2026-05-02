@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using WelterKit.FunctionalContainers_tests.Containers;
 using WelterKit.FunctionalContainers_tests.Theory;
@@ -22,15 +20,15 @@ public class Laws_Monoid {
                                                  { 0, 1, 0 },
                                                  { 0, 0, 1 } });
 
-      testIdentity(new SquareMatrixMultData_3<float>(m3sq_0));
-      testIdentity(new SquareMatrixMultData_3<float>(m3sq_42));
-      testIdentity(new SquareMatrixMultData_3<float>(m3sq_id));
+      testIdentity(new SquareMatrixMult3<float>(m3sq_0));
+      testIdentity(new SquareMatrixMult3<float>(m3sq_42));
+      testIdentity(new SquareMatrixMult3<float>(m3sq_id));
 
       // TODO: more...
    }
 
 
-   private static void testIdentity<N>(SquareMatrixMultData_3<N> testValue)
+   private static void testIdentity<N>(SquareMatrixMult3<N> testValue)
          where N : INumber<N>
       => Laws.Monoid.Identity(testValue, LawsTestHelpers.AreMatricesEqual);
 }
