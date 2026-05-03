@@ -11,7 +11,7 @@ namespace WelterKit.FunctionalContainers_tests.ContainerTests.Writer_Tests;
 public class SampleUsage {
 
    [TestMethod]
-   public void LogSampleApplicativeStyle2() {
+   public void LogSampleApplicativeStyle() {
       // Arrange
       string[] expectedLogs =
          [
@@ -21,7 +21,7 @@ public class SampleUsage {
       const int expectedResult = 153000;
 
       // Act
-      (Logger logs, int result) = combined().runWriter;
+      (Logger logs, int result) = combined().RunWriter();
 
       // Assert
       Assert.AreEqual(expectedResult, result);
@@ -32,13 +32,13 @@ public class SampleUsage {
       static Writer<Logger, int> step1(int a, int b) {
          int result = a + b;
          string logMsg = $"{nameof( step1 )}: [{a}] + [{b}] = [{result}]";
-         return new Writer<Logger, int>((new Logger([logMsg]), result));
+         return new Writer<Logger, int>(() => (new Logger([logMsg]), result));
       }
 
       static Writer<Logger, int> step2(int a) {
          int result = a * 100;
          string logMsg = $"{nameof( step2 )}: [{a}] * 100 = [{result}]";
-         return new Writer<Logger, int>((new Logger([logMsg]), result));
+         return new Writer<Logger, int>(() => (new Logger([logMsg]), result));
       }
 
       Writer<Logger, int> combined()

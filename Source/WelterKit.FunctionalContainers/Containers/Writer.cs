@@ -6,36 +6,41 @@ using WelterKit.FunctionalContainers.Framework.Kinds;
 namespace WelterKit.FunctionalContainers.Containers;
 
 // newtype Writer w a = Writer { runWriter :: (a, w) } 
-
+// runWriter :: Writer w a -> (a, w)
 // TODO: figure out a 'newtype'-like way of avoiding actually creating new instances of this
-public record Writer<W, A>((W writer, A value) runWriter) : K<Writer<W>, A>
-                                                          where W : IMonoid<W>;
+public record Writer<W, A>(Func<(W writer, A value)> RunWriter)
+      : K<Writer<W>, A>
+      where W : IMonoid<W> {
+   public static (W, A) runWriter(Writer<W, A> fa) => fa.RunWriter();
+}
 
 
+// declare necessary constraints
 public partial class Writer<W> where W : IMonoid<W>;
 
 
 partial class Writer<W> : IFunctor<Writer<W>> {
    // fmap f (Writer (a, w)) = Writer (f a, w)
    public static K<Writer<W>, B> FMap<A, B>(K<Writer<W>, A> fa, Func<A, B> func) {
-      (W w, A a) = fa.As().runWriter;
-      return new Writer<W, B>((w, func(a)));
+      (W w, A a) = fa.As().RunWriter();
+      return new Writer<W, B>(() => (w, func(a)));
    }
+
+
 }
 
 
 partial class Writer<W> : IApplicative<Writer<W>> {
    // pure x = (mempty, x)
    public static K<Writer<W>, A> Pure<A>(A a)
-      => new Writer<W, A>((W.Empty, a));
+      => new Writer<W, A>(() => (W.Empty, a));
 
 
    // (Writer (logF, f)) <*> (Writer (logV, v)) = Writer (logF `mappend` logV, f v)
    public static K<Writer<W>, B> Apply<A, B>(K<Writer<W>, Func<A, B>> ffunc, K<Writer<W>, A> fa) {
-      (W fw, Func<A, B> ff) = ffunc.As().runWriter;
-      (W aw, A aa)          = fa   .As().runWriter;
-      return new Writer<W, B>((fw.Combine(aw),
-                               ff(aa)));
+      (W fw, Func<A, B> ff) = ffunc.As().RunWriter();
+      (W aw, A aa)          = fa   .As().RunWriter();
+      return new Writer<W, B>(() => (fw.Combine(aw), ff(aa)));
    }
 }
 
