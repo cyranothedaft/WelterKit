@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Immutable;
 using WelterKit.FunctionalContainers;
 using WelterKit.FunctionalContainers.Containers;
 using WelterKit.FunctionalContainers.Framework.Kinds;
@@ -21,7 +20,7 @@ public class SampleUsage {
       const int expectedResult = 153000;
 
       // Act
-      (Logger logs, int result) = combined().RunWriter();
+      (StringAccumulator logs, int result) = combined().RunWriter();
 
       // Assert
       Assert.AreEqual(expectedResult, result);
@@ -29,35 +28,25 @@ public class SampleUsage {
       return;
 
 
-      static Writer<Logger, int> step1(int a, int b) {
+      Writer<StringAccumulator, int> combined()
+         => Writer<StringAccumulator>.Pure(Fn.Curry<int, int, int>(multiply)) // combine step results by multiplying them
+                                      // note: these are independent operations:
+                                     .Apply(step1(42, 111))
+                                     .Apply(step2(10))
+                                     .As();
+
+      static Writer<StringAccumulator, int> step1(int a, int b) {
          int result = a + b;
          string logMsg = $"{nameof( step1 )}: [{a}] + [{b}] = [{result}]";
-         return new Writer<Logger, int>(() => (new Logger([logMsg]), result));
+         return new Writer<StringAccumulator, int>(() => (new StringAccumulator([logMsg]), result));
       }
 
-      static Writer<Logger, int> step2(int a) {
+      static Writer<StringAccumulator, int> step2(int a) {
          int result = a * 100;
          string logMsg = $"{nameof( step2 )}: [{a}] * 100 = [{result}]";
-         return new Writer<Logger, int>(() => (new Logger([logMsg]), result));
+         return new Writer<StringAccumulator, int>(() => (new StringAccumulator([logMsg]), result));
       }
 
-      Writer<Logger, int> combined()
-         => Writer<Logger>.Pure(Fn.Curry<int, int, int>(multiply)) // combine step results by multiplying them
-                           // note: these are independent operations:
-                          .Apply(step1(42, 111))
-                          .Apply(step2(10))
-                          .As();
-
       static int multiply(int x, int y) => x * y;
-   }
-
-   private record Logger(ImmutableList<string> Entries) : IMonoid<Logger> {
-      public Logger Combine(Logger rhs)
-         => new(         this.Entries
-                .AddRange(rhs.Entries));
-
-
-      public static Logger Empty { get; }
-         = new Logger([]);
    }
 }

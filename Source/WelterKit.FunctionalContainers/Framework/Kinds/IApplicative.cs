@@ -13,6 +13,8 @@ public interface IApplicative<F> : IFunctor<F> where F : IApplicative<F> {
 
 
 public static class ApplicativeExtensions {
+   public static K<F, A> Pure<F, A>(this A a) where F : IApplicative<F> => F.Pure(a);
+
    public static K<F, B> Apply<F, A, B>(this K<F, A> fa, K<F, Func<A, B>> ffunc) where F : IApplicative<F> => F.Apply(ffunc, fa);
    public static K<F, B> Apply<F, A, B>(this K<F, Func<A, B>> ffunc, K<F, A> fa) where F : IApplicative<F> => F.Apply(ffunc, fa);
 
