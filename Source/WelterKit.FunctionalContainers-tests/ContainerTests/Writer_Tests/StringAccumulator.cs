@@ -8,6 +8,9 @@ namespace WelterKit.FunctionalContainers_tests.ContainerTests.Writer_Tests;
 internal record StringAccumulator(ImmutableList<string> Entries) : IMonoid<StringAccumulator> {
    public StringAccumulator Combine(StringAccumulator rhs) => new(Entries.AddRange(rhs.Entries));
    public static StringAccumulator Empty { get; } = new([]);
+
+   public override string ToString()
+      => string.Join("\r\n", Entries);
 }
 
 
