@@ -13,11 +13,11 @@ internal static class TestSet1 {
    public static Writer<StringAccumulator, decimal> Writer_sum3 { get; }
       = getFinal(sum3);
 
-   public static Writer<StringAccumulator, Func<decimal, int>> Func_decimal_int { get; }
+   public static Writer<StringAccumulator, Func<decimal, int>> WriterFunc_decimal_int { get; }
       = new(() => (new StringAccumulator(["123"]),
                    x => (int)decimal.Ceiling(x)));
 
-   public static Writer<StringAccumulator, Func<int, string>> Func_int_string { get; }
+   public static Writer<StringAccumulator, Func<int, string>> WriterFunc_int_string { get; }
       = new(() => (new StringAccumulator(["987"]),
                    x => x.ToString()));
 

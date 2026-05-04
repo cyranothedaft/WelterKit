@@ -18,4 +18,7 @@ internal record StringAccumulator(ImmutableList<string> Entries) : IMonoid<Strin
 internal static class StringAccumulatorAssert {
    internal static void AreEqual(StringAccumulator expected, StringAccumulator actual)
       => CollectionAssert.AreEqual(expected.Entries, actual.Entries);
+
+   internal static void AreEqual(StringAccumulator expected, StringAccumulator actual, string msg)
+      => CollectionAssert.AreEqual(expected.Entries, actual.Entries, msg);
 }
