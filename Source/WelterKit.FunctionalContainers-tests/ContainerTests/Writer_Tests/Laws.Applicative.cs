@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Numerics;
 using WelterKit.FunctionalContainers_tests.ContainerTests.Writer_Tests;
 using WelterKit.FunctionalContainers_tests.Theory;
-using WelterKit.FunctionalContainers;
 using WelterKit.FunctionalContainers.Containers;
 using WelterKit.FunctionalContainers.Framework;
 using WelterKit.FunctionalContainers.Framework.Kinds;
@@ -16,7 +14,7 @@ public class Laws_Applicative {
 
    [TestMethod]
    public void Identity() {
-      testIdentity_string(TestSet1.TestWriter);
+      testIdentity_string(TestSet1.Writer_sum3);
 
       // TODO: more...
    }
@@ -24,7 +22,9 @@ public class Laws_Applicative {
 
    [TestMethod]
    public void Composition() {
-      testComposition_string(TestSet1.TestWriter);
+      Laws.Applicative.Composition(TestSet1.Func_int_string, 
+                                   TestSet1.Func_decimal_int, 
+                                   TestSet1.Writer_sum3, assertAreEqual);
 
       // TODO: more... ?
    }
@@ -34,38 +34,25 @@ public class Laws_Applicative {
       => ForWriter<StringAccumulator>.TestIdentity(testWriter, StringAccumulatorAssert.AreEqual);
 
 
-   private static void testComposition_string(Writer<StringAccumulator, decimal> w,
-                                              =====) {
-      var funcs = (u: new Writer<StringAccumulator, Func<float, string>>(() => (new StringAccumulator(["987"]),
-                                                                                x => x.ToString("F"))),
-                   v: new Writer<StringAccumulator, Func<int, float>>(() => (new StringAccumulator(["123"]),
-                                                                             x => x / 10f)));
-
-      (StringAccumulator, int ) testRunWriter() => (new StringAccumulator(["ABC"]),
-                                                    456);
-
-      var testWriter = new Writer<StringAccumulator, int>(testRunWriter);
-
-
-      Laws.Applicative.Composition(funcs.u,
-                                   funcs.v,
-                                   testWriter,
-                                   assertAreEqual);
-
-   }
+   // private static void testComposition_string<A, B, C>(( Writer<StringAccumulator, Func<B, C>> u,
+   //                                                       Writer<StringAccumulator, Func<A, B>> v ) funcs,
+   //                                                     Writer<StringAccumulator, A> w)
+   //    => Laws.Applicative.Composition(funcs.u, funcs.v, w, assertAreEqual);
 
 
    private static void assertAreEqual<A>(K<Writer<StringAccumulator>, A> expected, K<Writer<StringAccumulator>, A> actual)
        => assertAreEqual(expected.As(), actual.As());
 
-    private static void assertAreEqual<A>(Writer<StringAccumulator, A> expected, Writer<StringAccumulator, A> actual) {
-       (StringAccumulator writer, A value) expectedRun = expected.RunWriter();
-       (StringAccumulator writer, A value) actualRun = actual.RunWriter();
-       Assert.AreEqual(expectedRun, actualRun);
-    }
+
+   private static void assertAreEqual<A>(Writer<StringAccumulator, A> expected, Writer<StringAccumulator, A> actual) {
+      (StringAccumulator writer, A value) expectedRun = expected.RunWriter();
+      (StringAccumulator writer, A value) actualRun = actual.RunWriter();
+      Assert.AreEqual(expectedRun.value, actualRun.value, "value");
+      CollectionAssert.AreEqual(expectedRun.writer.Entries, actualRun.writer.Entries, "writer (Entries)");
+   }
 
 
-    //    [TestMethod]
+   //    [TestMethod]
 //    public void Homomorphism() {
 //       static string func1(int x) => x.ToString();
 //
@@ -154,32 +141,5 @@ public class Laws_Applicative {
    }
 
 
-   private static class TestSet1 {
-      public static Writer<StringAccumulator, decimal> TestWriter { get; }
-         = getFinal(sum3);
-
-
-      static Writer<StringAccumulator, decimal> getFinal(Func<decimal, decimal, decimal, decimal> combineResults)
-         => Writer<StringAccumulator>.Pure(Fn.Curry(combineResults))
-                                     .Apply(startWith(42.42M))
-                                     .Apply(then(42.42M))
-                                     .Apply(andFinally(42.42M))
-                                     .As();
-
-      static Writer<StringAccumulator, decimal> startWith(decimal value)
-         => new(() => (new StringAccumulator([$"Starting with: {value}"]), value));
-
-      static Writer<StringAccumulator, decimal> then(decimal value) {
-         decimal h = value / 2;
-         return new(() => (new StringAccumulator([$"Then, halved: {h}"]), h));
-      }
-
-      static Writer<StringAccumulator, decimal> andFinally(decimal value) {
-         decimal t = value * 3;
-         return new(() => (new StringAccumulator([$"And, finally, tripled: {t}"]), t));
-      }
-
-      static N sum3<N>(N a, N b, N c) where N : INumber<N> => a + b + c;
-   }
 
 }
