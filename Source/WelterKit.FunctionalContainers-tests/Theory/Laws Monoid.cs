@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WelterKit.FunctionalContainers.Framework.Kinds;
+using WelterKit.FunctionalContainers.Framework.Traits;
 
 
 namespace WelterKit.FunctionalContainers_tests.Theory;

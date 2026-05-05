@@ -3,7 +3,7 @@ using System.Numerics;
 using WelterKit.FunctionalContainers_tests.ContainerTests.Writer_Tests;
 using WelterKit.FunctionalContainers;
 using WelterKit.FunctionalContainers.Containers;
-using WelterKit.FunctionalContainers.Framework.Kinds;
+using WelterKit.FunctionalContainers.Framework.Traits;
 
 
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WelterKit.FunctionalContainers.Framework.Kinds;
+namespace WelterKit.FunctionalContainers.Framework.Traits;
 
 public interface IFunctor<F> where F : IFunctor<F> {
    public static abstract K<F, B> FMap<A, B>(K<F, A> fa, Func<A, B> func);

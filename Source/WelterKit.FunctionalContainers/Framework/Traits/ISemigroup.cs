@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WelterKit.FunctionalContainers.Framework.Kinds;
+namespace WelterKit.FunctionalContainers.Framework.Traits;
 
 public interface ISemigroup<M> where M : ISemigroup<M> {
 
