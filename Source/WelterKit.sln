@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelterKit.FunctionalContain
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelterKit.FunctionalContainers-tests", "WelterKit.FunctionalContainers-tests\WelterKit.FunctionalContainers-tests.csproj", "{430CE045-2520-4E47-BECE-A853D8E5B84B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildSystemSample", "SampleApps\BuildSystemSample\BuildSystemSample.csproj", "{79F55A73-C94F-4983-A1A8-09DC57A4724C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,10 @@ Global
 		{430CE045-2520-4E47-BECE-A853D8E5B84B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{430CE045-2520-4E47-BECE-A853D8E5B84B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{430CE045-2520-4E47-BECE-A853D8E5B84B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79F55A73-C94F-4983-A1A8-09DC57A4724C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79F55A73-C94F-4983-A1A8-09DC57A4724C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79F55A73-C94F-4983-A1A8-09DC57A4724C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79F55A73-C94F-4983-A1A8-09DC57A4724C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +110,7 @@ Global
 		{7673B948-910E-4A89-81B1-01D93B0FC476} = {84A0ACA2-4C95-46F5-A8AA-771521905B01}
 		{20B73C85-A9C2-4AF8-BEEE-E15247278B2B} = {7076B16F-ABC0-487D-A0AA-962A68D62B75}
 		{430CE045-2520-4E47-BECE-A853D8E5B84B} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{79F55A73-C94F-4983-A1A8-09DC57A4724C} = {84A0ACA2-4C95-46F5-A8AA-771521905B01}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5944CD6C-D03A-4480-96E8-099FE896A0BF}
