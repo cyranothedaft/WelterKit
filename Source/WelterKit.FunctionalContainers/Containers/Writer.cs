@@ -25,8 +25,6 @@ partial class Writer<W> : IFunctor<Writer<W>> {
       (W w, A a) = fa.As().RunWriter();
       return new Writer<W, B>(() => (w, func(a)));
    }
-
-
 }
 
 
@@ -41,6 +39,17 @@ partial class Writer<W> : IApplicative<Writer<W>> {
       (W fw, Func<A, B> ff) = ffunc.As().RunWriter();
       (W aw, A aa)          = fa   .As().RunWriter();
       return new Writer<W, B>(() => (fw.Combine(aw), ff(aa)));
+   }
+}
+
+
+partial class Writer<W> : IMonad<Writer<W>> {
+   // (x, wa) >>= f = let (y, wb) = f x
+   //                in (y, wa `mappend` wb)
+   public static K<Writer<W>, B> Bind<A, B>(K<Writer<W>, A> ma, Func<A, K<Writer<W>, B>> f) {
+      (W wa, A x) = ma.As().RunWriter();
+      (W wb, B y) = f(x).As().RunWriter();
+      return new Writer<W, B>(() => (wa.Combine(wb), y));
    }
 }
 

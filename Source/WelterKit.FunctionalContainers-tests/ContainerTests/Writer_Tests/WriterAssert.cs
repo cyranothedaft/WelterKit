@@ -9,18 +9,18 @@ namespace WelterKit.FunctionalContainers_tests.ContainerTests.Writer_tests;
 internal static class WriterAssert {
    public static void AreEqual<W, A>(K<Writer<W>, A> expected,
                                      K<Writer<W>, A> actual,
-                                     Action<W, W> assertAreEqual) where W : IMonoid<W>
-      => AreEqual(expected.As(), actual.As(), assertAreEqual);
+                                     Action<W, W> assertWriteesAreEqual) where W : IMonoid<W>
+      => AreEqual(expected.As(), actual.As(), assertWriteesAreEqual);
 
 
    public static void AreEqual<W, A>(Writer<W, A> expected,
                                      Writer<W, A> actual,
-                                     Action<W, W> assertAreEqual) where W : IMonoid<W> {
+                                     Action<W, W> assertWriteesAreEqual) where W : IMonoid<W> {
       (W writer, A value) exp = expected.RunWriter();
       (W writer, A value) act = actual  .RunWriter();
 
       Assert.AreEqual(exp.value, act.value);
-      assertAreEqual(exp.writer, act.writer);
+      assertWriteesAreEqual(exp.writer, act.writer);
    }
 
    // partial function application
