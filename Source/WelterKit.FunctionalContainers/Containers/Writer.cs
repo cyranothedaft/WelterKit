@@ -12,6 +12,8 @@ public record Writer<W, A>(Func<(W writer, A value)> RunWriter)
       : K<Writer<W>, A>
       where W : IMonoid<W> {
    public static (W, A) runWriter(Writer<W, A> fa) => fa.RunWriter();
+
+   // TODO: 'tell' function
 }
 
 

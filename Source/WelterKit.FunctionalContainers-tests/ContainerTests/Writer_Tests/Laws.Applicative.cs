@@ -4,6 +4,7 @@ using WelterKit.FunctionalContainers_tests.Theory;
 using WelterKit.FunctionalContainers.Containers;
 using WelterKit.FunctionalContainers.Framework;
 using WelterKit.FunctionalContainers.Framework.Kinds;
+using static WelterKit.FunctionalContainers_tests.ContainerTests.Writer_Tests.Helpers;
 
 
 namespace WelterKit.FunctionalContainers_tests.ContainerTests.Writer_tests;
@@ -25,7 +26,7 @@ public class Laws_Applicative {
       Laws.Applicative.Composition(TestSet1.WriterFunc_int_string,
                                    TestSet1.WriterFunc_decimal_int,
                                    TestSet1.Writer_sum3,
-                                   assertWritersAreEqual);
+                                   AssertWritersAreEqual);
 
       // TODO: more...
    }
@@ -33,7 +34,7 @@ public class Laws_Applicative {
 
    [TestMethod]
    public void Homomorphism() {
-      Laws.Applicative.Homomorphism<Writer<StringAccumulator>, string, int>("ABC 123", s => s.Length, assertWritersAreEqual);
+      Laws.Applicative.Homomorphism<Writer<StringAccumulator>, string, int>("ABC 123", (string s) => s.Length, AssertWritersAreEqual);
 
       // TODO: more...
    }
@@ -41,25 +42,10 @@ public class Laws_Applicative {
 
    [TestMethod]
    public void Interchange() {
-      Laws.Applicative.Interchange(TestSet1.WriterFunc_int_string, 42, assertWritersAreEqual);
+      Laws.Applicative.Interchange(TestSet1.WriterFunc_int_string, 42, AssertWritersAreEqual);
 
       // TODO: more...
    }
-
-
-   private static void assertWritersAreEqual<A>(K<Writer<StringAccumulator>, A> expected, K<Writer<StringAccumulator>, A> actual)
-      => assertWritersAreEqual(expected.As(), actual.As());
-
-
-   private static void assertWritersAreEqual<A>(Writer<StringAccumulator, A> expected, Writer<StringAccumulator, A> actual) {
-      (StringAccumulator writer, A value) expectedRun = expected.RunWriter();
-      (StringAccumulator writer, A value) actualRun = actual.RunWriter();
-      Assert.AreEqual(expectedRun.value, actualRun.value, "value");
-      StringAccumulatorAssert.AreEqual(expectedRun.writer, actualRun.writer, "writer");
-   }
-
-
-
 
 
    private static class ForWriter<W> where W : IMonoid<W> {

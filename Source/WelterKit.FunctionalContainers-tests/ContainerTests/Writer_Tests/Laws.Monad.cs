@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Immutable;
-using WelterKit.FunctionalContainers_tests.ContainerTests.Writer_Tests;
 using WelterKit.FunctionalContainers_tests.Theory;
-using WelterKit.FunctionalContainers.Containers;
-using WelterKit.FunctionalContainers.Framework;
-using WelterKit.FunctionalContainers.Framework.Kinds;
-
+using static WelterKit.FunctionalContainers_tests.ContainerTests.Writer_Tests.Helpers;
 
 
 namespace WelterKit.FunctionalContainers_tests.ContainerTests.Writer_tests;
@@ -14,7 +9,7 @@ namespace WelterKit.FunctionalContainers_tests.ContainerTests.Writer_tests;
 public class Laws_Monad {
    [TestMethod]
    public void LeftIdentity() {
-      Laws.Monad.LeftIdentity(42, x => newWriter(["ABC"], x.ToString()), assertAreEqual);
+      Laws.Monad.LeftIdentity(42, x => NewWriter(["ABC"], x.ToString()), AssertWritersAreEqual);
 
       // TODO: more...
    }
@@ -22,7 +17,7 @@ public class Laws_Monad {
 
    [TestMethod]
    public void RightIdentity() {
-      Laws.Monad.RightIdentity(newWriter(["XYZ"], 42), assertAreEqual);
+      Laws.Monad.RightIdentity(NewWriter(["XYZ"], 42), AssertWritersAreEqual);
 
       // TODO: more...
    }
@@ -30,20 +25,11 @@ public class Laws_Monad {
 
    [TestMethod]
    public void Associativity() {
-      Laws.Monad.Associativity(newWriter(["DEF"], 42),
-                               g: (int n) => newWriter(["LMNO"],  n.ToString()),
-                               h: (string s) => newWriter(["PQ"], s + "$$"),
-                               assertAreEqual);
+      Laws.Monad.Associativity(NewWriter(["DEF"], 42),
+                               g: (int n)    => NewWriter(["LMNO"],  n.ToString()),
+                               h: (string s) => NewWriter(["PQ"], s + "$$"),
+                               AssertWritersAreEqual);
 
       // TODO: more...
    }
-
-
-   private Writer<StringAccumulator, A> newWriter<A>(ImmutableList<string> writerEntries, A value)
-      => new(() => (new StringAccumulator(writerEntries), value));
-
-
-   private void assertAreEqual<A>(K<Writer<StringAccumulator>, A> expected, K<Writer<StringAccumulator>, A> actual)
-      => WriterAssert.AreEqual(expected, actual, StringAccumulatorAssert.AreEqual);
-
 }
