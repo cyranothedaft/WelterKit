@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WelterKit.FunctionalContainers.Framework.Kinds;
+namespace WelterKit.FunctionalContainers.Framework.Traits;
 
 public interface IApplicative<F> : IFunctor<F> where F : IApplicative<F> {
    // pure :: a -> f a

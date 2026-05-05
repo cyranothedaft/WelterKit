@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WelterKit.FunctionalContainers.Framework.Kinds;
+namespace WelterKit.FunctionalContainers.Framework.Traits;
 
 public interface IMonad<M> : IFunctor<M>, IApplicative<M> where M : IMonad<M> {
    // return :: a -> M a 

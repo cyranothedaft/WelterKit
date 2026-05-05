@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using WelterKit.FunctionalContainers.Framework;
-using WelterKit.FunctionalContainers.Framework.Kinds;
+using WelterKit.FunctionalContainers.Framework.Traits;
 
 
 namespace WelterKit.FunctionalContainers.Containers;
@@ -44,6 +44,17 @@ partial class KList : IMonad<KList> {
       => new KList<A>(mma.As().List.SelectMany(innerList => innerList.As().List)
                                    .ToImmutableList());
 
+}
+
+
+partial class KList : IFoldable<KList> {
+   public static B Foldr<A, B>(Func<A, B, B> fold, B initialValue, K<KList, A> ma) {
+      // TODO: use a more functional approach
+      B b = initialValue;
+      foreach (A a in ma.As().List)
+         b = fold(a, b);
+      return b;
+   }
 }
 
 

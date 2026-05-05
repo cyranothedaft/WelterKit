@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Numerics;
-using WelterKit.FunctionalContainers.Framework.Kinds;
+using WelterKit.FunctionalContainers.Framework.Traits;
 
 
 namespace WelterKit.FunctionalContainers_tests.Containers;

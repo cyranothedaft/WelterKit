@@ -1,7 +1,7 @@
 ﻿using System;
 using WelterKit.FunctionalContainers.Containers;
 using WelterKit.FunctionalContainers.Framework;
-using WelterKit.FunctionalContainers.Framework.Kinds;
+using WelterKit.FunctionalContainers.Framework.Traits;
 
 
 namespace WelterKit.FunctionalContainers_tests.ContainerTests.Writer_tests;
