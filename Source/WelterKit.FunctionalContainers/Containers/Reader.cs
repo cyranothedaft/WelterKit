@@ -6,21 +6,18 @@ using WelterKit.FunctionalContainers.Framework.Traits;
 namespace WelterKit.FunctionalContainers.Containers;
 
 // newtype Reader r a = Reader { runReader :: r -> a }
-// TODO: figure out a 'newtype'-like way of avoiding actually creating new instances of this
+// runReader :: Reader r a -> r -> a
 public record Reader<R, A>(Func<R , A > RunReader) : K<Reader<R>, A> {
 
    public static A runReader(Reader<R, A> ma, R r) => ma.RunReader(r);
 
    // TODO: functions: ask, asks, local
-   // ask :: Reader r r
-   // ask = Reader id
-   //
-   // asks :: (r -> a) -> Reader r a
-   // asks f = Reader f
-   //
-   // local :: (r -> r) -> Reader r a -> Reader r a
-   // local f m = Reader $ \r -> runReader m (f r)
+   // ask :: m r 
+   // asks :: (r -> r)
 }
+
+
+public partial class Reader<R>;
 
 
 partial class Reader<R> : IFunctor<Reader<R>> {
@@ -34,14 +31,19 @@ partial class Reader<R> : IApplicative<Reader<R>> {
       => new Reader<R, A>(_ => a);
 
 
-   public static K<Reader<R>, B> Apply<A, B>(K<Reader<R>, Func<A, B>> ffunc, K<Reader<R>, A> fa) 
-   =>new Reader<R, B>(r=>ffunc(r()))=====
+   // (<*>) :: (r -> a -> b) -> (r -> a) -> (r -> b)
+   // (<*>) f g = \r -> (f r) (g r)
+   public static K<Reader<R>, B> Apply<A, B>(K<Reader<R>, Func<A, B>> f, K<Reader<R>, A> g)
+      => new Reader<R, B>(r => f.As().RunReader(r)
+                                (g.As().RunReader(r)));
 }
 
 
 partial class Reader<R> : IMonad<Reader<R>> {
-   public static K<Reader<R>, B> Bind<A, B>(K<Reader<R>, A> ma, Func<A, K<Reader<R>, B>> f)
-      => new Reader<R, B>((R r) => Reader<R, A>.runReader(f(Reader<R, A>.runReader(ma)(r)))(r));
+   // (>>=) :: Reader r a -> (a -> Reader r b) -> Reader r b
+   // (Reader f1) >>= f2 = Reader $ \r -> runReader (f2 (f1 r)) r
+   public static K<Reader<R>, B> Bind<A, B>(K<Reader<R>, A> rf1, Func<A, K<Reader<R>, B>> f2)
+      => new Reader<R, B>(r => f2(rf1.As().RunReader(r)).As().RunReader(r));
 }
 
 
