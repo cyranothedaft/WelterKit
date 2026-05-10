@@ -7,24 +7,35 @@ namespace WelterKit.FunctionalContainers.Containers;
 
 // newtype Reader r a = Reader { runReader :: r -> a }
 // TODO: figure out a 'newtype'-like way of avoiding actually creating new instances of this
-public record Reader<R, A>(
-      // Unwraps the monad, requiring the environment input to produce the final value
-      Func<R , A > RunReader
-) : K<Reader<R>, A> {
+public record Reader<R, A>(Func<R , A > RunReader) : K<Reader<R>, A> {
 
-   public static A runReader(Reader<R, A> ma) =>ma.RunReader(ma.)
+   public static A runReader(Reader<R, A> ma, R r) => ma.RunReader(r);
 
    // TODO: functions: ask, asks, local
+   // ask :: Reader r r
+   // ask = Reader id
+   //
+   // asks :: (r -> a) -> Reader r a
+   // asks f = Reader f
+   //
+   // local :: (r -> r) -> Reader r a -> Reader r a
+   // local f m = Reader $ \r -> runReader m (f r)
 }
 
 
 partial class Reader<R> : IFunctor<Reader<R>> {
+   public static K<Reader<R>, B> FMap<A, B>(K<Reader<R>, A> fa, Func<A, B> func)
+      => new Reader<R, B>(r => func(fa.As().RunReader(r)));
 }
 
 
 partial class Reader<R> : IApplicative<Reader<R>> {
    public static K<Reader<R>, A> Pure<A>(A a)
       => new Reader<R, A>(_ => a);
+
+
+   public static K<Reader<R>, B> Apply<A, B>(K<Reader<R>, Func<A, B>> ffunc, K<Reader<R>, A> fa) 
+   =>new Reader<R, B>(r=>ffunc(r()))=====
 }
 
 
