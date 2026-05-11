@@ -6,7 +6,9 @@ using WelterKit.FunctionalContainers.Framework.Traits;
 namespace WelterKit.FunctionalContainers_tests.ContainerTests.State_Tests;
 
 [TestClass]
-public class SampleUsage {
+public class SampleUsage_Gcd {
+   #region GCD example
+   
    [TestMethod]
    public void TestGcdFuncs() {
       Assert.AreEqual(8, gcd(1024, 40));
@@ -147,4 +149,5 @@ public class SampleUsage {
    private static int run_gcd_s2(int x, int y)
       => gcd_s2.runState(new(x, y)).value;
 
+   #endregion
 }
