@@ -55,34 +55,27 @@ public class SampleUsage {
 
    [TestMethod]
    public void LogSampleMonadStyle() {
-      // -- A simple function that logs its input
-      // logValue :: Int -> Writer [String] Int
-      // logValue x = writer (x, ["Logged: " ++ show x])
-      // 
-      // -- Chaining without do notation
-      // multWithLog :: Writer [String] Int
-      // multWithLog = 
-      //     logValue 3 >>= \a ->
-      //     logValue 5 >>= \b ->
-      //     return (a * b)
-      // 
-      // -- Running the computation
-      // -- runWriter multWithLog returns (15, ["Logged: 3", "Logged: 5"])
 
-      (StringAccumulator writer, int value) finalResult = doSomeMultiplying().As().RunWriter();
-      Assert.AreEqual(3*5, finalResult.value);
+      (StringAccumulator writer, int value) finalResult = doSomeMultiplying(3, 5)
+                                                         .RunWriter();
+      Assert.AreEqual(3 * 5, finalResult.value);
       StringAccumulatorAssert.AreEqual(new(["Logged: 3", "Logged: 5"]), finalResult.writer);
       return;
 
 
+      // A simple function that logs its input
       static Writer<StringAccumulator, int> logValue(int value)
          => NewWriter([$"Logged: {value}"], value);
 
-      static K<Writer<StringAccumulator>, int> doSomeMultiplying()
-         => logValue(3)
-              .Bind(a => logValue(5)
-              .Bind(b => (a * b)
-              .Return<Writer<StringAccumulator>, int>()
-               ));
+      static Writer<StringAccumulator, int> doSomeMultiplying(int value1, int value2)
+         => (from a in logValue(value1)
+             from b in logValue(value2)
+             select a * b).As();
+      // ^-- is equivalent to: --v
+      // => logValue(3)
+      //      .Bind(a => logValue(5)
+      //      .Bind(b => (a * b)
+      //      .Return<Writer<StringAccumulator>, int>()
+      //       ));
    }
 }

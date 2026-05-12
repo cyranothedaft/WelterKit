@@ -6,14 +6,17 @@ using WelterKit.FunctionalContainers.Framework.Traits;
 namespace WelterKit.FunctionalContainers_tests.ContainerTests.State_Tests;
 
 [TestClass]
+// direct byte array
 public class SampleUsage_ParseBinary1 {
    
    [TestMethod]
-   public void ReadBinaryDataSample1() {
+   public void ReadBinaryDataSample() {
       byte[] binaryData = [ 0xff, 0xff, 0x2a, 0xff, 0xff ];
       ByteState initialState = new(binaryData, 0);
-      (ByteState state, BinaryData readData) result = BinaryParser.ReadBinaryData().runState(initialState);
+      (ByteState state, BinaryData readData) result = BinaryParser.ReadBinaryData()
+                                                                  .runState(initialState);
       Assert.AreEqual(new BinaryData(65535, 42, -1), result.readData);
+      Assert.AreEqual(binaryData.Length, result.state.Offset);
    }
    
    

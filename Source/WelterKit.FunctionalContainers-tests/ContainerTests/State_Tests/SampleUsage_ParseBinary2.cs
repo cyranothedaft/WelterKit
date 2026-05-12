@@ -9,10 +9,10 @@ namespace WelterKit.FunctionalContainers_tests.ContainerTests.State_Tests;
 
 [TestClass]
 // Stream + BinaryReader
-public class SampleUsage_ParseBinary {
+public class SampleUsage_ParseBinary2 {
 
    [TestMethod]
-   public void ReadBinaryDataSample1() {
+   public void ReadBinaryDataSample() {
       byte[] rawBinaryData =
          [
             (byte)'M',
@@ -26,17 +26,16 @@ public class SampleUsage_ParseBinary {
 
       (BinaryReaderWithState.ReadState state, MyBinaryData readData) result;
       using ( MemoryStream stream = new MemoryStream(rawBinaryData) )
-      // TODO: also encapsulate (abstract away) the BinaryReader itself
-      using ( BinaryReader reader = new BinaryReader(stream, new ASCIIEncoding()) ) {
-         BinaryReaderWithState.ReadState initialState = new(reader, Position: 0);
-         result = readMyBinaryData().runState(initialState);
-      }
+      using ( BinaryReader reader = new BinaryReader(stream, new ASCIIEncoding()) ) // TODO: also encapsulate (abstract away) the BinaryReader itself
+         result = readMyBinaryData()
+                 .runState(new BinaryReaderWithState.ReadState(reader, Position: 0));
+
       Assert.AreEqual(new MyBinaryData("Magic", 42, -1), result.readData);
       Assert.AreEqual((uint)rawBinaryData.Length,        result.state.Position);
    }
 
 
-   private static State<BinaryReaderWithState.ReadState , MyBinaryData> readMyBinaryData()
+   private static State<BinaryReaderWithState.ReadState, MyBinaryData> readMyBinaryData()
       => (from magic  in BinaryReaderWithState.Read(Readers.FixedLengthString_ASCII, 5)
           from value1 in BinaryReaderWithState.Read(Readers.Int32)
           from value2 in BinaryReaderWithState.Read(Readers.Int16)
