@@ -26,6 +26,12 @@ public static class EnumerableExtensions {
    }
 
 
+   public static void ForEach<T>(this IEnumerable<T> source, Action<T> action) {
+      foreach (T x in source)
+         action(x);
+   }
+
+
    public static (ImmutableList<TResult1> list1, ImmutableList<TResult2> list2) Separate<T, TResult1, TResult2>(this IEnumerable<T> source, Func<T, (TResult1, TResult2)> mapSplitFunc) {
       ImmutableList<TResult1>.Builder builder1 = ImmutableList.CreateBuilder<TResult1>();
       ImmutableList<TResult2>.Builder builder2 = ImmutableList.CreateBuilder<TResult2>();

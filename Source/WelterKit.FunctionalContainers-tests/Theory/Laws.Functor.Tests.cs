@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WelterKit.FunctionalContainers.Framework;
 using WelterKit.FunctionalContainers.Framework.Traits;
-
+using WelterKit.StaticUtilities;
 
 
 namespace WelterKit.FunctionalContainers_tests.Theory;
@@ -13,79 +12,47 @@ namespace WelterKit.FunctionalContainers_tests.Theory;
 public abstract class Laws_Functor_Tests<M> where M : IFunctor<M> {
 
    protected abstract void AssertAreEqual<A>(K<M, A> expected, K<M, A> actual);
-   protected abstract K<M, int>[] GetTestSubjects_int(int x);
+
+   protected abstract K<M, int    >[] GetTestSubjects_int    (int     x);
+   protected abstract K<M, float  >[] GetTestSubjects_float  (float   x);
+   protected abstract K<M, string >[] GetTestSubjects_string (string  x);
+   protected abstract K<M, string?>[] GetTestSubjects_stringn(string? x);
 
 
    [TestMethod]
    public void Identity() {
-      int[]intsToTest = [0, 42];
+      testIdentity(TestValues._int    , GetTestSubjects_int    , AssertAreEqual);
+      testIdentity(TestValues._float  , GetTestSubjects_float  , AssertAreEqual);
+      testIdentity(TestValues._string , GetTestSubjects_string , AssertAreEqual);
+      testIdentity(TestValues._stringn, GetTestSubjects_stringn, AssertAreEqual);
+      return;
 
-      IEnumerable<K<M, int>> intFunctors2test = from int i in intsToTest
-                                                from K<M, int> t in GetTestSubjects_int(i)
-                                                select t;
-
-      // TODO: distinct?
-      foreach (K<M, int> subject in intFunctors2test)
-         Laws.Functor.Identity(subject, AssertAreEqual);
-
-      // testIdentity(new None<float>());
-      // testIdentity(new Some<float>(0));
-      // testIdentity(new Some<float>(42.42f));
-      // testIdentity(new None<string>());
-      // testIdentity(new Some<string>(string.Empty));
-      // testIdentity(new Some<string>("abc XYZ"));
-      // testIdentity(new None<string?>());
-      // testIdentity(new Some<string?>(null));
-      // testIdentity(new Some<string?>("abc XYZ"));
-
-      // TODO: more...
-
+      static void testIdentity<A>(IEnumerable<A> testValues,
+                                  Func<A, IEnumerable<K<M, A>>> getTestSubjects,
+                                  Action<K<M, A>, K<M, A>> assertAreEqual)
+         => testValues.SelectMany(getTestSubjects)
+                      .Distinct()
+                      .ForEach(subject => Laws.Functor.Identity(subject, assertAreEqual));
    }
 
 
-   //
-   //
-   // [TestMethod]
-   // public void Composition() {
-   //    var funcs1 = ( g: (Func<string, string>)( static x => x + "$"   ),
-   //                   h: (Func<int, string>   )( static x => x.ToString() ) );
-   //
-   //    (int state, int value) runReader1(int x) => (x, x);
-   //    (int state, int value) runReader2(int x) => (x+1, x-1);
-   //
-   //    int[] initialReaders1 = [int.MinValue, -42, -1, 0, 1, 42, int.MaxValue];
-   //
-   //    multitestComposition(funcs1, new Reader<int, int>(runReader1), initialReaders1);
-   //    multitestComposition(funcs1, new Reader<int, int>(runReader2), initialReaders1);
-   ////    // TODO: more...
-   // }
-   //
-   //
-   // private void testIdentity<A>(K<M, A> testSubject)
-   //    => Laws.Functor.Identity(testSubject, AssertAreEqual);
-   //
-   //
-   // private static void testComposition<S, A, B, C>(( Func<B, C> g,
-   //                                                   Func<A, B> h ) funcs,
-   //                                                 Reader<S, A> testReader,
-   //                                                 S sampleInitialReader)
-   //    => Laws.Functor.Composition(testReader,
-   //                                funcs.g,
-   //                                funcs.h,
-   //                                (expected, actual) => LawsTestHelpers.AssertReadersAreEqual(expected, actual, sampleInitialReader));
-   //
-   //
-   // private static void multitestIdentity<S, A>(Reader<S, A> testReader, S[] sampleInitialReaders) {
-   //    foreach (S initialReader in sampleInitialReaders)
-   //       testIdentity(testReader, initialReader);
-   // }
-   //
-   //
-   // private static void multitestComposition<S, A, B, C>(( Func<B, C> g,
-   //                                                        Func<A, B> h ) funcs,
-   //                                                      Reader<S, A> testReader,
-   //                                                      S[] sampleInitialReaders) {
-   //    foreach (S initialReader in sampleInitialReaders)
-   //       testComposition(funcs, testReader, initialReader);
-   // }
+   [TestMethod]
+   public void Composition() {
+      testComposition(TestValues._int    , TestFunctions.IntToStringToStringFuncs          , GetTestSubjects_int    , AssertAreEqual<string  >);
+      testComposition(TestValues._float  , TestFunctions.FloatToIntToStringFuncs           , GetTestSubjects_float  , AssertAreEqual<string  >);
+      testComposition(TestValues._string , TestFunctions.StringToIntToTimeSpanFuncs        , GetTestSubjects_string , AssertAreEqual<TimeSpan>);
+      testComposition(TestValues._stringn, TestFunctions.StringNToBoolStringTupleToIntFuncs, GetTestSubjects_stringn, AssertAreEqual<int     >);
+      return;
+
+      static void testComposition<A, B, C>(IEnumerable<A> testValues, IEnumerable<(Func<A, B> h, Func<B, C> g)> testFuncs,
+                                           Func<A, IEnumerable<K<M, A>>> getTestSubjects,
+                                           Action<K<M, C>, K<M, C>> assertAreEqual)
+         => testValues.SelectMany(getTestSubjects)
+                      .Distinct()
+                      .SelectMany(_ => testFuncs, (subject, funcs) => (subject, funcs))
+                      .ForEach(testInput => Laws.Functor.Composition(testInput.subject,
+                                                                     testInput.funcs.g,
+                                                                     testInput.funcs.h,
+                                                                     assertAreEqual));
+   }
 }
