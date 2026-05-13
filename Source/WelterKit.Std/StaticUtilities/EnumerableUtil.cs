@@ -97,6 +97,11 @@ namespace WelterKit.Std.StaticUtilities {
          => Enumerable.Range(0, count).Select(_ => item);
 
 
+      public static IEnumerable<T> RepeatSequence<T>(this IEnumerable<T> source, int count)
+         => Enumerable.Range(0, count)
+                      .SelectMany(_ => source);
+
+
       // TODO: test more
       public static IEnumerable<T> ReplaceAll<T>(this IEnumerable<T> source, Func<T, bool> predicateFunc, T replaceWith) {
          foreach ( T x in source ) {

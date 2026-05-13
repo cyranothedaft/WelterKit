@@ -1,4 +1,8 @@
 ﻿// using System;
+// using System.Collections.Generic;
+// using System.Collections.Immutable;
+// using System.Linq;
+// using WelterKit.FunctionalContainers_tests.Support;
 // using WelterKit.FunctionalContainers_tests.Theory;
 // using WelterKit.FunctionalContainers.Containers;
 // using WelterKit.FunctionalContainers.Framework;
@@ -13,22 +17,23 @@
 //                                    actual.As().List);
 //
 //
-//    protected override K<KList, int>[] GetTestSubjects_int(int[] x) => 
+//    protected override K<KList, int    >[] GetTestSubjects (int    [] values) => getVariations(values);
+//    protected override K<KList, float  >[] GetTestSubjects (float  [] values) => getVariations(values);
+//    protected override K<KList, string >[] GetTestSubjects (string [] values) => getVariations(values);
+//    protected override K<KList, string?>[] GetTestSubjectsn(string?[] values) => getVariations(values);
 //
+//    private K<KList, A>[] getVariations<A>(A[] values) {
+//       yield return [];
+//       yield return values.ToImmutableList();
+//       yield return values.RepeatSequence(2).ToImmutableList();
+//       IEnumerable<int> listSizesToTest = new int[] { 1, 2 } // always include these two
 //
-//    protected override K<KList, float>[] GetTestSubjects_float(float x) {
-//       throw new NotImplementedException();
+//       return ListMaker.ChoosePermutations(values,new RandomIntSequenceGenerator(1,values.Length))
 //    }
 //
 //
-//    protected override K<KList, string>[] GetTestSubjects_string(string x) {
-//       throw new NotImplementedException();
-//    }
-//
-//
-//    protected override K<KList, string?>[] GetTestSubjects_stringn(string? x) {
-//       throw new NotImplementedException();
-//    }
+//    private static K<KList, A> listOf<A>(IEnumerable<A> elements)
+//       => new KList<A>(elements.ToImmutableList());
 //
 //
 //    [TestMethod]

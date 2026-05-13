@@ -21,10 +21,10 @@ public abstract class Laws_Functor_Tests<M> where M : IFunctor<M> {
 
    [TestMethod]
    public void Identity() {
-      testIdentity(GetTestSubjects (TestValues._int    ), AssertAreEqual);
-      testIdentity(GetTestSubjects (TestValues._float  ), AssertAreEqual);
-      testIdentity(GetTestSubjects (TestValues._string ), AssertAreEqual);
-      testIdentity(GetTestSubjectsn(TestValues._stringn), AssertAreEqual);
+      testIdentity(GetTestSubjects (TestValues._int    ), AssertAreEqual<int    >);
+      testIdentity(GetTestSubjects (TestValues._float  ), AssertAreEqual<float  >);
+      testIdentity(GetTestSubjects (TestValues._string ), AssertAreEqual<string >);
+      testIdentity(GetTestSubjectsn(TestValues._stringn), AssertAreEqual<string?>);
       return;
 
       static void testIdentity<A>(K<M, A>[] testSubjects, Action<K<M, A>, K<M, A>> assertAreEqual)

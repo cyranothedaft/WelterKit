@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WelterKit.FunctionalContainers\WelterKit.FunctionalContainers.csproj" />
+    <ProjectReference Include="..\WelterKit.Testing\WelterKit.Testing.csproj" />
     <ProjectReference Include="..\WelterKit\WelterKit.csproj" />
   </ItemGroup>
 

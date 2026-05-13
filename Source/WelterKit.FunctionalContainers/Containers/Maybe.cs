@@ -11,6 +11,20 @@ public          partial record Some <A>(A Value) : Maybe<A>;
 public          partial record None <A>          : Maybe<A>;
 
 
+
+partial record Maybe<A> {
+   public abstract B Match<B>(Func<A, B> funcIfSome, Func<B> funcIfNone);
+}
+
+partial record Some<A> {
+   public override B Match<B>(Func<A, B> funcIfSome, Func<B> funcIfNone) => funcIfSome(this.Value);
+}
+
+partial record None<A> {
+   public override B Match<B>(Func<A, B> funcIfSome, Func<B> funcIfNone) => funcIfNone();
+}
+
+
 public partial class Maybe : IFunctor<Maybe> {
    public static K<Maybe, B> FMap<A, B>(K<Maybe, A> fa, Func<A, B> func)
       => fa.As() switch
@@ -58,8 +72,5 @@ partial class Maybe : IMonad<Maybe> {
 public static class MaybeExtensions {
    public static Maybe<A> As<A>(this K<Maybe, A> ma) => (Maybe<A>)ma;
 
-
-   // public static K<Maybe, B> FMap<A, B>(this K<Maybe, A> a, Func<A, B> func)
-   //    => Maybe.FMap(a, func);
-
+   public static Some<A> AsSome<A>(this A value) => new Some<A>(value);
 }
