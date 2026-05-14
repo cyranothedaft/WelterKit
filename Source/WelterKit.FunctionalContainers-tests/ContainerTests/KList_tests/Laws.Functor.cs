@@ -30,6 +30,12 @@
 //
 //       return ListMaker.ChoosePermutations(values,new RandomIntSequenceGenerator(1,values.Length))
 //    }
+/////      int[][] alwaysTestThesePermutations =
+/////         [
+/////            [],
+/////            possibleElements,
+/////            possibleElements.RepeatSequence(2).ToArray()
+/////         ];
 //
 //
 //    private static K<KList, A> listOf<A>(IEnumerable<A> elements)

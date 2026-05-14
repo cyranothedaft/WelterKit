@@ -65,3 +65,22 @@ public class RandomIntSequenceGenerator : ISequenceGenerator {
 
    public int Next() => _rng.Next();
 }
+
+
+public class CompositeSequenceGenerator : ISequenceGenerator {
+   private readonly ISequenceGenerator _source;
+   private readonly Func<int, int> _modifier;
+
+   public CompositeSequenceGenerator(ISequenceGenerator source, Func<int, int> modifier) {
+      _source   = source;
+      _modifier = modifier;
+   }
+
+   public int Next() => _modifier(_source.Next());
+}
+
+
+public static class SequenceGeneratorExtensions {
+   public static ISequenceGenerator Mod(this ISequenceGenerator source, int divisor)
+      => new CompositeSequenceGenerator(source, n => n % divisor);
+}
