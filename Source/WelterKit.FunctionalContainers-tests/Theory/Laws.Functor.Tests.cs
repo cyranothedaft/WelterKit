@@ -32,8 +32,6 @@ public abstract class Laws_Functor_Tests<M> where M : IFunctor<M> {
    }
 
 
-
-
    [TestMethod]
    public void Composition() {
       testComposition(GetTestSubjects (TestValues._int    ), TestFunctions.IntToStringToStringFuncs          , AssertAreEqual<string  >);

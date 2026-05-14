@@ -10,7 +10,8 @@ namespace WelterKit.FunctionalContainers_tests.ContainerTests.Maybe_tests;
 [TestClass]
 public class Laws_Functor : Laws_Functor_Tests<Maybe> {
    protected override void AssertAreEqual<A>(K<Maybe, A> expected, K<Maybe, A> actual)
-      => Assert.AreEqual(expected.As(), actual.As());
+      => Assert.AreEqual(expected.As(),
+                         actual  .As());
 
 
    protected override K<Maybe, int    >[] GetTestSubjects (int    [] values) => someAndNone(values);
