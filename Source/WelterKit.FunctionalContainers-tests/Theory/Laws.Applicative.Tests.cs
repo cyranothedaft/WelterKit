@@ -10,21 +10,22 @@ namespace WelterKit.FunctionalContainers_tests.Theory;
 
 [TestClass]
 public abstract class Laws_Applicative_Tests<M> where M : IApplicative<M> {
-
-   protected abstract void AssertAreEqual<A>(K<M, A> expected, K<M, A> actual);
-
-   protected abstract K<M, int    >[] GetTestSubjects (int    [] x);
-   protected abstract K<M, float  >[] GetTestSubjects (float  [] x);
-   protected abstract K<M, string >[] GetTestSubjects (string [] x);
-   protected abstract K<M, string?>[] GetTestSubjectsn(string?[] x);
-
+   internal abstract ILawsTestData<M> TestData { get; }
+   //
+   // protected abstract void AssertAreEqual<A>(K<M, A> expected, K<M, A> actual);
+   //
+   // protected abstract K<M, int    >[] GetTestSubjects (int    [] x);
+   // protected abstract K<M, float  >[] GetTestSubjects (float  [] x);
+   // protected abstract K<M, string >[] GetTestSubjects (string [] x);
+   // protected abstract K<M, string?>[] GetTestSubjectsn(string?[] x);
+   //
 
    [TestMethod]
    public void Identity() {
-      testIdentity(GetTestSubjects (TestValues._int    ), AssertAreEqual<int    >);
-      testIdentity(GetTestSubjects (TestValues._float  ), AssertAreEqual<float  >);
-      testIdentity(GetTestSubjects (TestValues._string ), AssertAreEqual<string >);
-      testIdentity(GetTestSubjectsn(TestValues._stringn), AssertAreEqual<string?>);
+      testIdentity(TestData.GetTestSubjects (TestValues._int    ), TestData.AssertAreEqual<int    >);
+      testIdentity(TestData.GetTestSubjects (TestValues._float  ), TestData.AssertAreEqual<float  >);
+      testIdentity(TestData.GetTestSubjects (TestValues._string ), TestData.AssertAreEqual<string >);
+      testIdentity(TestData.GetTestSubjectsn(TestValues._stringn), TestData.AssertAreEqual<string?>);
       return;
 
       static void testIdentity<A>(K<M, A>[] testSubjects, Action<K<M, A>, K<M, A>> assertAreEqual)
@@ -36,10 +37,10 @@ public abstract class Laws_Applicative_Tests<M> where M : IApplicative<M> {
 
    [TestMethod]
    public void Composition() {
-      testComposition(GetTestSubjects (TestValues._int    ), TestFunctions.IntToStringToStringFuncs          .Select(pure), AssertAreEqual<string  >);
-      testComposition(GetTestSubjects (TestValues._float  ), TestFunctions.FloatToIntToStringFuncs           .Select(pure), AssertAreEqual<string  >);
-      testComposition(GetTestSubjects (TestValues._string ), TestFunctions.StringToIntToTimeSpanFuncs        .Select(pure), AssertAreEqual<TimeSpan>);
-      testComposition(GetTestSubjectsn(TestValues._stringn), TestFunctions.StringNToBoolStringTupleToIntFuncs.Select(pure), AssertAreEqual<int     >);
+      testComposition(TestData.GetTestSubjects (TestValues._int    ), TestFunctions.IntToStringToStringFuncs          .Select(pure), TestData.AssertAreEqual<string  >);
+      testComposition(TestData.GetTestSubjects (TestValues._float  ), TestFunctions.FloatToIntToStringFuncs           .Select(pure), TestData.AssertAreEqual<string  >);
+      testComposition(TestData.GetTestSubjects (TestValues._string ), TestFunctions.StringToIntToTimeSpanFuncs        .Select(pure), TestData.AssertAreEqual<TimeSpan>);
+      testComposition(TestData.GetTestSubjectsn(TestValues._stringn), TestFunctions.StringNToBoolStringTupleToIntFuncs.Select(pure), TestData.AssertAreEqual<int     >);
       return;
 
       static void testComposition<A, B, C>(IEnumerable<K<M, A>> testSubjects, IEnumerable<(K<M, Func<A, B>> v, K<M, Func<B, C>> u)> testFuncs,
@@ -54,10 +55,10 @@ public abstract class Laws_Applicative_Tests<M> where M : IApplicative<M> {
 
    [TestMethod]
    public void Homomorphism() {
-      testComposition(GetTestSubjects (TestValues._int    ), TestFunctions.IntToStringToStringFuncs          .Select(pure), AssertAreEqual<string  >);
-      testComposition(GetTestSubjects (TestValues._float  ), TestFunctions.FloatToIntToStringFuncs           .Select(pure), AssertAreEqual<string  >);
-      testComposition(GetTestSubjects (TestValues._string ), TestFunctions.StringToIntToTimeSpanFuncs        .Select(pure), AssertAreEqual<TimeSpan>);
-      testComposition(GetTestSubjectsn(TestValues._stringn), TestFunctions.StringNToBoolStringTupleToIntFuncs.Select(pure), AssertAreEqual<int     >);
+      testComposition(TestData.GetTestSubjects (TestValues._int    ), TestFunctions.IntToStringToStringFuncs          .Select(pure), TestData.AssertAreEqual<string  >);
+      testComposition(TestData.GetTestSubjects (TestValues._float  ), TestFunctions.FloatToIntToStringFuncs           .Select(pure), TestData.AssertAreEqual<string  >);
+      testComposition(TestData.GetTestSubjects (TestValues._string ), TestFunctions.StringToIntToTimeSpanFuncs        .Select(pure), TestData.AssertAreEqual<TimeSpan>);
+      testComposition(TestData.GetTestSubjectsn(TestValues._stringn), TestFunctions.StringNToBoolStringTupleToIntFuncs.Select(pure), TestData.AssertAreEqual<int     >);
       return;
 
       static void testComposition<A, B, C>(IEnumerable<K<M, A>> testSubjects, IEnumerable<(K<M, Func<A, B>> v, K<M, Func<B, C>> u)> testFuncs,
@@ -72,10 +73,10 @@ public abstract class Laws_Applicative_Tests<M> where M : IApplicative<M> {
 
    [TestMethod]
    public void Interchange() {
-      testComposition(GetTestSubjects (TestValues._int    ), TestFunctions.IntToStringToStringFuncs          .Select(pure), AssertAreEqual<string  >);
-      testComposition(GetTestSubjects (TestValues._float  ), TestFunctions.FloatToIntToStringFuncs           .Select(pure), AssertAreEqual<string  >);
-      testComposition(GetTestSubjects (TestValues._string ), TestFunctions.StringToIntToTimeSpanFuncs        .Select(pure), AssertAreEqual<TimeSpan>);
-      testComposition(GetTestSubjectsn(TestValues._stringn), TestFunctions.StringNToBoolStringTupleToIntFuncs.Select(pure), AssertAreEqual<int     >);
+      testComposition(TestData.GetTestSubjects (TestValues._int    ), TestFunctions.IntToStringToStringFuncs          .Select(pure), TestData.AssertAreEqual<string  >);
+      testComposition(TestData.GetTestSubjects (TestValues._float  ), TestFunctions.FloatToIntToStringFuncs           .Select(pure), TestData.AssertAreEqual<string  >);
+      testComposition(TestData.GetTestSubjects (TestValues._string ), TestFunctions.StringToIntToTimeSpanFuncs        .Select(pure), TestData.AssertAreEqual<TimeSpan>);
+      testComposition(TestData.GetTestSubjectsn(TestValues._stringn), TestFunctions.StringNToBoolStringTupleToIntFuncs.Select(pure), TestData.AssertAreEqual<int     >);
       return;
 
       static void testComposition<A, B, C>(IEnumerable<K<M, A>> testSubjects, IEnumerable<(K<M, Func<A, B>> v, K<M, Func<B, C>> u)> testFuncs,

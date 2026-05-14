@@ -10,25 +10,8 @@ namespace WelterKit.FunctionalContainers_tests.ContainerTests.Maybe_tests;
 
 [TestClass]
 public class Laws_Applicative : Laws_Applicative_Tests<Maybe> {
-   protected override void AssertAreEqual<A>(K<Maybe, A> expected, K<Maybe, A> actual) {
-//      ... these are the same as for Functor tests! ...=====
-   }
+   internal override ILawsTestData<Maybe> TestData { get; } = new LawsTestData();
 
-   protected override K<Maybe, int>[] GetTestSubjects(int[] x) {
-      throw new NotImplementedException();
-   }
-
-   protected override K<Maybe, float>[] GetTestSubjects(float[] x) {
-      throw new NotImplementedException();
-   }
-
-   protected override K<Maybe, string>[] GetTestSubjects(string[] x) {
-      throw new NotImplementedException();
-   }
-
-   protected override K<Maybe, string?>[] GetTestSubjectsn(string?[] x) {
-      throw new NotImplementedException();
-   }
    //
    //
    // [TestMethod]

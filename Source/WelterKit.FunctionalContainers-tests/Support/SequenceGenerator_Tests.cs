@@ -26,9 +26,10 @@ public class SequenceGenerator_Tests {
 
    [TestMethod]
    public void Test_RecursiveSequenceGenerator() {
-      ISequenceGenerator seq = new RecursiveSequenceGenerator(0, i => i + 12);
+      static int add12(int n) => n + 12;
+      ISequenceGenerator seq = new RecursiveSequenceGenerator(-1, add12);
 
-      int[] expectedSequence = [0, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144];
+      int[] expectedSequence = [-1, 11, 23, 35, 47, 59, 71, 83, 95, 107, 119, 131, 143];
 
       Assert.AreEqual(expectedSequence[0], seq.Next());
       Assert.AreEqual(expectedSequence[1], seq.Next());
