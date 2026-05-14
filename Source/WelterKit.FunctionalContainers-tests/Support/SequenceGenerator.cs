@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using WelterKit.FunctionalContainers.Containers;
-
 
 
 namespace WelterKit.FunctionalContainers_tests.Support;
@@ -15,8 +13,14 @@ public interface ISequenceGenerator {
       => EnumerateEndless().Take(count);
 
 
+   // IEnumerable<int> NextN(int count, int modulo)
+   //    => NextN(count)
+   //         .Select(n => n % modulo);
+
+
    IEnumerable<A> GetItems<A>(IList<A> chooseFrom, int countToChoose)
-      => NextN(countToChoose).Select(i => chooseFrom[i]);
+      => NextN(countToChoose)
+           .Select(i => chooseFrom[i % chooseFrom.Count]);
 
 
    IEnumerable<int> EnumerateEndless() {
@@ -52,14 +56,12 @@ public class RecursiveSequenceGenerator : ISequenceGenerator {
 public class RandomIntSequenceGenerator : ISequenceGenerator {
    private readonly Random _rng;
 
+   public RandomIntSequenceGenerator(int? seed = null) {
+      _rng = seed.HasValue
+                   ? new Random(seed.Value)
+                   : new Random();
 
-   private RandomIntSequenceGenerator(Maybe<int> seed_) {
-      _rng = seed_.Match(seed => new Random(seed),
-                         ()   => new Random());
    }
 
-
    public int Next() => _rng.Next();
-
-   public int Next(int minValue, int maxValue) => (Next() % (maxValue - minValue)) + minValue;
 }

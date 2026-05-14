@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
-using WelterKit.FunctionalContainers.Containers;
-
+using WelterKit.Testing;
 
 
 namespace WelterKit.FunctionalContainers_tests.Support;
@@ -10,16 +9,18 @@ namespace WelterKit.FunctionalContainers_tests.Support;
 public class SequenceGenerator_Tests {
    [TestMethod]
    public void Test_RandomSequenceGenerator() {
-      ISequenceGenerator seq = new RandomIntSequenceGenerator(4242.AsSome());
-      // ISequenceGenerator seq = new RandomIntSequenceGenerator(0, 10, 4242);
+      ISequenceGenerator seq = new RandomIntSequenceGenerator(4242);
 
-      int[] expectedSequence = [8, 4, 8, 9, 4, 6, 5, 5, 7, 5, 5, 2, 8, 3, 2, 2, 0, 0, 5, 8];
-
+      int[] expectedSequence =
+         [
+            1834865992, 1071811615, 1879216329, 2111132622, 877335630, 1360174786, 1208041663, 1261463278, 1683182456, 1107802323,
+            1079767260, 554031781, 1718095855, 842595438, 564370835, 532595417, 54858973, 69776995, 1094701343, 1798953383
+         ];
       Assert.AreEqual(expectedSequence[0], seq.Next());
       Assert.AreEqual(expectedSequence[1], seq.Next());
       Assert.AreEqual(expectedSequence[2], seq.Next());
       // test the next 17
-      CollectionAssert.AreEqual(expectedSequence[3..], seq.EnumerateEndless().Take(17).ToArray());
+      SequenceAssert.AreEqual(expectedSequence[3..], seq.EnumerateEndless().Take(17).ToArray(), null);
    }
 
 
@@ -33,6 +34,6 @@ public class SequenceGenerator_Tests {
       Assert.AreEqual(expectedSequence[1], seq.Next());
       Assert.AreEqual(expectedSequence[2], seq.Next());
       // test the next 10
-      CollectionAssert.AreEqual(expectedSequence[3..], seq.EnumerateEndless().Take(10).ToArray());
+      SequenceAssert.AreEqual(expectedSequence[3..], seq.EnumerateEndless().Take(10).ToArray(), null);
    }
 }
